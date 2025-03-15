@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <title>LocalCo - Coworking</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description"
+    content="Site da empresa LocalCo que é voltado para o Coworking, que tem por finalidade o aluguel de salas para trabalho" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/icon/Favicon.ico" type="image/x-icon" />
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+  <!-- Biblioteca AOS - Animação de textos -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <div class="container-fluid section-contato">
+    <div class="container">
+      <header class="header">
+
+        <nav class="navbar navbar-expand-lg navbar-ligth ">
+          <div class="container-fluid">
+            <img class="logoPC img-fluid" src="../assets/img/Logo.svg" alt="Logo da empresa - LocalCo" />
+
+            <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end offcanvas-link" tabindex="-1" id="offcanvasNavbar"
+              aria-labelledby="offcanvasNavbarLabel">
+              <div class="offcanvas-header bg-navbar ">
+                <img src="../assets/img/Logo.svg" class="offcanvas-title w-25 " id="offcanvasNavbarLabel"></img>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body bg-navbar">
+                <ul class="navbar-nav justify-content-center flex-grow-1">
+                  <li class="nav-item mx-md-3">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                  </li>
+                  <li class="nav-item mx-md-3">
+                    <a class="nav-link active" aria-current="page" href="nosso-espaco.html">O Nosso Espaço</a>
+                  </li>
+                  <li class="nav-item mx-md-3">
+                    <a class="nav-link active" aria-current="page" href="planos.html">Nossos Planos</a>
+                  </li>
+                  <li class="nav-item mx-md-3">
+                    <a class="nav-link active" aria-current="page" href="contato.html">Contato</a>
+                  </li>
+                  <li class="nav-item mx-md-3">
+                    <a class="nav-link active" aria-current="page" href="blog.html">Blog</a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <a class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center " href="./login.html" target="_blank">Login</a>
+
+          </div>
+        </nav>
+        <hr class="divisor-header">
+      </header>
+    </div>
+
+    <main>
+
+      <div class=" container p-0 d-flex flex-wrap align-items-center justify-content-center">
+
+        <div class="col-12 col-md-12 col-lg-12 col-xl-6">
+          <div class="row">
+            
+              <div class="d-flex flex-column align-content-center">
+                <p class="h2 mb-5">Faça nos uma visita</p>
+                <p class="h3">LOCALIZAÇÃO</p>
+                <!-- <p class="sub-titulo mt-5">Rua Gustavo Barbosa, nº 123 </p>
+                <p class="sub-titulo mt-3">centro/SP</p> -->
+                <div class="map d-flex justify-content-center my-5">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.317702257775!2d-47.40150102378768!3d-22.567217925825307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c880ee0caac24d%3A0x95fcf7d5914d4d50!2sSenac%20Limeira!5e0!3m2!1spt-BR!2sbr!4v1719529298636!5m2!1spt-BR!2sbr"
+                    width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+              </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-md-12 col-lg-12 col-xl-6 my-3 d-flex align-content-center">
+          <div class="row border-dark shadow-lg py-3">
+            <div class="col">
+              <p class="h2 mt-0 mb-4">Formulário para Contato</h1>
+
+              <form class="needs-validation " novalidate>
+                <div class="row border-dark shadow-lg py-4">
+                  <div class="col-md-12 px-4">
+                    <label for="name" class="contato-description form-label">Nome Completo</label>
+                    <input type="text" class="form-control form-control-lg" required>
+                    <div class="invalid-feedback">
+                      Digite um nome válido!
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-4">
+                    <label for="email" class="contato-description form-label">E-mail</label>
+                    <input type="email" class="form-control form-control-lg" required>
+                    <div class="invalid-feedback">
+                      Digite um e-mail válido!
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-4">
+                    <label for="telefone" class="contato-description form-label">Telefone</label>
+                    <input type="number" class="form-control form-control-lg" required>
+                  </div>
+
+                  <div class="col-12 px-4">
+                    <label for="mensagem" class="contato-description form-label">Mensagem</label>
+                    <textarea name="msg" id="msg" rows="4" class="form-control form-control-lg" placeholder="Digite uma mensagem" required></textarea>
+                    <div class="invalid-feedback">
+                      Por favor, digite uma mensagem no campo!
+                    </div>                      
+                  </div>
+                  <div class="col-12 px-4">
+                    <button type="submit"
+                      class="contato login enviar bt btn-primary btn-lg w-100 mt-2 fw-bold rounded">Enviar<i
+                        class="bi bi-arrow-right m-2 fw-bold"></i></button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="mt-5">
+      <div class="container-fluid footer d-flex justify-content-center align-items-center">
+        <p class="d-block text-center mb-0">
+          <span class="text-footer fs-6">Todos os direitos reservados</span>
+          <a href="#" class="fs-5 text-footer-um">&copy; LOCALCO</a>
+        </p>
+        <div class="item mx-lg-2 ps-3">
+          <a href="#"><i class="fs-4 item insta bi bi-instagram"></i></a>
+          <a href="#"><i class="fs-4 item face bi bi-facebook mx-lg-2"></i></a>
+          <a href="#"><i class="fs-4 item x bi bi-twitter-x"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script type="module" src="../js/main.js"></script>
+    <script src="../js/validacao.js"></script>
+
+</body>
+
+</html>
