@@ -17,8 +17,7 @@ class SalaController extends Controller
         'tipo_sala' => 'required|string|max:50',
         'descricao_sala' => 'required|string',
         'capac_pessoas' => 'required|integer',
-        'preco_base' => 'required|numeric',
-        'foto' => 'required|string'
+        'preco_base' => 'required|numeric'
     ]);
 
     $salas = Salas::create($data);
@@ -43,12 +42,11 @@ public function update(Request $request, $id_sala_pk){
         'tipo_sala' => 'required|string|max:50',
         'descricao_sala' => 'required|string',
         'capac_pessoas' => 'required|integer',
-        'preco_base' => 'required|numeric',
-        'foto' => 'required|string'
+        'preco_base' => 'required|numeric'
     ]);
 
     $salas->update($data);
-    return response()->json('Sala atualizada com sucesso', 200);
+    return response()->json(null, 200);
 }
 
 public function destroy($id_sala_pk){

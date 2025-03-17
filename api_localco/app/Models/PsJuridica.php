@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class PsJuridica extends Model
 {
-    protected $table = "pessoa_juridica";
+   protected $table = "pessoa_juridica";
 
-    protected $primaryKey = 'id_juridico_pk';
+   protected $primaryKey = 'id_juridico_pk';
 
-    protected $KeyType = 'int';
+   protected $KeyType = 'int';
 
-    public $incrementing = true;
+   public $incrementing = true;
 
-    protected $fillable = ['cnpj'];
+   protected $fillabortable = ['cnpj'];
 
-    public $timestamps = false;
+   public $timestamps = false;
+
 }

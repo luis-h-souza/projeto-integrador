@@ -252,11 +252,6 @@ body,
   bottom: 32px;
 }
 
-/* .contato.cta:hover {
-  background-image: linear-gradient(to left, #d94c30, #fc8971) !important;
-  border: var(--color-primary);
-} */
-
 /* DESKTOP */
 
 @media screen and (max-width: 991px) {

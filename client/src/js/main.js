@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 let main = {};
 
-
 main.event = {
   init: () => {
     AOS.init();
@@ -15,6 +14,230 @@ main.event = {
 
 
 main.method = {
+  
+
+  // centraliza as chamadas de GET - axios
+  get: async (url, callbackSuccess, callbackError, login = false) => {
+    try {
+      // verifica se o token é válido, se for váçido faz a chamad
+      if (app.method.validaToken(login)) {
+        const token = app.method.obterValorStorage("token");
+        const response = await axios.get(url, {
+          headers: { // cabeçalho da requisição
+            "Content-Type": "application/json;charset=utf-8",
+            "Authorization": token
+          }
+        });
+        callbackSuccess(response.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        app.method.logout();
+      }
+      callbackError(error);
+    }
+  },
+
+  // centraliza as chamadas de POST
+  post: async (url, dados, callbackSuccess, callbackError, login = false) => {
+    try {
+      if (app.method.validaToken(login)) {
+        const token = app.method.obterValorStorage("token");
+        const response = await axios.post(url, dados, {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "Authorization": token
+          }
+        });
+        callbackSuccess(response.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        app.method.logout();
+      }
+      callbackError(error);
+    }
+  },
+
+  // centraliza as chamadas de upload
+  upload: async (url, dados, callbackSuccess, callbackError, login = false) => {
+    try {
+      if (app.method.validaToken(login)) {
+        const token = app.method.obterValorStorage("token");
+        const response = await axios.post(url, dados, {
+          headers: {
+            "Mime-Type": "multipart/form-data",
+            "Authorization": token
+          }
+        });
+        callbackSuccess(response.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        app.method.logout();
+      }
+      callbackError(error);
+    }
+  },
+
+
+  // get: (url, callbackSuccess, callbackError, login = false) => {
+  //   try {
+  //     if (app.method.validaToken(login)) {
+  //       let xhr = new XMLHttpRequest();
+  //       //abre a conexão passando o verbo GET e a url da requisição
+  //       xhr.open("GET", url);
+  //       // seta o cabeçalho da requisição - tipo de conteúdo e token
+  //       xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  //       // seta o token no cabeçalho da requisição - autorização
+  //       xhr.setRequestHeader(
+  //         "Authorization",
+  //         app.method.obterValorStorage("token")
+  //       );
+
+  //       // função que é chamda quando a requisição é finalizada - readyState = 4
+  //       xhr.onreadystatechange = function () {
+  //         if (this.readyState == 4) {
+  //           if (this.status == 200) {
+  //             // se o retorno for 200, chama o callback de sucesso
+  //             return callbackSuccess(JSON.parse(xhr.responseText));
+  //           } else {
+  //             // se o retorno for não autorizado, redireciona o usuário para o login
+  //             if (xhr.status == 401) {
+  //               app.method.logout();
+  //             }
+
+  //             return callbackError(xhr.responseText);
+  //           }
+  //         }
+  //       };
+  //       // envia a requisição
+  //       xhr.send();
+  //     }
+  //   } catch (error) {
+  //     return callbackError(error);
+  //   }
+  // },
+
+  // centraliza as chamadas de POST
+  // post: (url, dados, callbackSuccess, callbackError, login = false) => {
+  //   try {
+  //     if (app.method.validaToken(login)) {
+  //       let xhr = new XMLHttpRequest();
+  //       xhr.open("POST", url);
+  //       xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  //       xhr.setRequestHeader(
+  //         "Authorization",
+  //         app.method.obterValorStorage("token")
+  //       );
+
+  //       xhr.onreadystatechange = function () {
+  //         if (this.readyState == 4) {
+  //           if (this.status == 200) {
+  //             return callbackSuccess(JSON.parse(xhr.responseText));
+  //           } else {
+  //             // se o retorno for não autorizado, redireciona o usuário para o login
+  //             if (xhr.status == 401) {
+  //               app.method.logout();
+  //             }
+
+  //             return callbackError(xhr.responseText);
+  //           }
+  //         }
+  //       };
+  //       // envia os dados pra servidor
+  //       xhr.send(dados);
+  //     }
+  //   } catch (error) {
+  //     return callbackError(error);
+  //   }
+  // },
+
+  // centraliza as chamadas de upload
+  // upload: (url, dados, callbackSuccess, callbackError, login = false) => {
+  //   try {
+  //     if (app.method.validaToken(login)) {
+  //       let xhr = new XMLHttpRequest();
+  //       xhr.open("POST", url);
+  //       xhr.setRequestHeader("Mime-Type", "multipart/form-data");
+  //       xhr.setRequestHeader(
+  //         "Authorization",
+  //         app.method.obterValorStorage("token")
+  //       );
+
+  //       xhr.onreadystatechange = function () {
+  //         if (this.readyState == 4) {
+  //           if (this.status == 200) {
+  //             return callbackSuccess(JSON.parse(xhr.responseText));
+  //           } else {
+  //             // se o retorno for não autorizado, redireciona o usuário para o login
+  //             if (xhr.status == 401) {
+  //               app.method.logout();
+  //             }
+
+  //             return callbackError(xhr.responseText);
+  //           }
+  //         }
+  //       };
+  //       xhr.send(dados);
+  //     }
+  //   } catch (error) {
+  //     return callbackError(error);
+  //   }
+  // },
+
+  // método para validar se o token existe (local). É chamado em todas as requisições
+  
+  validaToken: (login = false) => {
+
+    // verifica se existe o token na sessão
+    var tokenAtual = app.method.obterValorStorage("token");
+
+    // validação se o token não existe
+    if (
+      (tokenAtual == undefined ||
+        tokenAtual == null ||
+        tokenAtual == "" ||
+        tokenAtual == "null") &&
+      !login
+    ) {
+      window.location.href = "/painel/login.html";
+      return false;
+    }
+    return true;
+  },
+
+  api_: async () => {
+    console.log('iniciou')
+
+    const formReserva = document.getElementById('form-reserva');
+    const btnReserva = document.getElementById('btn-reserva');
+    const reservas = document.getElementById('reservas');
+
+    const baseURL = 'http://localhost/simple_api/public/api';
+    const tabela = document.querySelector("#tabela-reservas");
+
+    try {
+      const response = await axios.get(`${baseURL}/clients`);
+      let clientes = response.data.data.data;
+
+      console.log(clientes);
+
+      clientes.forEach(cliente => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${cliente.id}</td>
+          <td>${cliente.nome}</td>
+          <td>${cliente.email}</td>
+          <td>${cliente.created_at}</td>
+          <td>${new Date(cliente.updated_at).toLocaleString()}</td>
+        `;
+        tabela.appendChild(tr);
+      });
+    } catch (error) {
+      console.error('Erro ao buscar clientes:', error);
+    }
+  },
 
   login: () => {
     console.log('Chamei login do MAIN')
@@ -63,4 +286,5 @@ main.method = {
 
 }
 
-export default main;
+
+import axios from 'axios';
