@@ -40,8 +40,8 @@ main.method = {
   },
   
   // centraliza as chamadas de POST
-  post: async (url, dados, callbackSuccess, callbackError, login = false) => {
-    url = "http://localhost:8000/api";
+  post_criar: async (url, dados, callbackSuccess, callbackError, login = false) => {
+    url = "http://localhost:8000/api/register";
     try {
       // if (main.method.validaToken(login)) {
       //   const token = main.method.obterValorStorage("token");
@@ -60,6 +60,30 @@ main.method = {
       }
       callbackError(error);
     }
+    window.location.href = "../pages/login.html"
+  },
+
+  post_logar: async (url, dados, callbackSuccess, callbackError, login = false) => {
+    url = "http://localhost:8000/api/login";
+    try {
+      // if (main.method.validaToken(login)) {
+      //   const token = main.method.obterValorStorage("token");
+        const response = await axios.post(url, dados, {
+          headers: {
+            "cors": false,
+            "Content-Type": "application/json;charset=utf-8",
+            "Authorization": ""//token
+          }
+        });
+        callbackSuccess(response.data);
+      
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        app.method.logout();
+      }
+      callbackError(error);
+    }
+    window.location.href = "../pages/login.html"
   },
 
   // centraliza as chamadas de upload
@@ -84,114 +108,6 @@ main.method = {
     }
   },
 
-
-  // get: (url, callbackSuccess, callbackError, login = false) => {
-  //   try {
-  //     if (main.method.validaToken(login)) {
-  //       let xhr = new XMLHttpRequest();
-  //       //abre a conexão passando o verbo GET e a url da requisição
-  //       xhr.open("GET", url);
-  //       // seta o cabeçalho da requisição - tipo de conteúdo e token
-  //       xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-  //       // seta o token no cabeçalho da requisição - autorização
-  //       xhr.setRequestHeader(
-  //         "Authorization",
-  //         main.method.obterValorStorage("token")
-  //       );
-
-  //       // função que é chamda quando a requisição é finalizada - readyState = 4
-  //       xhr.onreadystatechange = function () {
-  //         if (this.readyState == 4) {
-  //           if (this.status == 200) {
-  //             // se o retorno for 200, chama o callback de sucesso
-  //             return callbackSuccess(JSON.parse(xhr.responseText));
-  //           } else {
-  //             // se o retorno for não autorizado, redireciona o usuário para o login
-  //             if (xhr.status == 401) {
-  //               main.method.logout();
-  //             }
-
-  //             return callbackError(xhr.responseText);
-  //           }
-  //         }
-  //       };
-  //       // envia a requisição
-  //       xhr.send();
-  //     }
-  //   } catch (error) {
-  //     return callbackError(error);
-  //   }
-  // },
-
-  // centraliza as chamadas de POST
-  // post: (url, dados, callbackSuccess, callbackError, login = false) => {
-  //   try {
-  //     if (main.method.validaToken(login)) {
-  //       let xhr = new XMLHttpRequest();
-  //       xhr.open("POST", url);
-  //       xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-  //       xhr.setRequestHeader(
-  //         "Authorization",
-  //         main.method.obterValorStorage("token")
-  //       );
-
-  //       xhr.onreadystatechange = function () {
-  //         if (this.readyState == 4) {
-  //           if (this.status == 200) {
-  //             return callbackSuccess(JSON.parse(xhr.responseText));
-  //           } else {
-  //             // se o retorno for não autorizado, redireciona o usuário para o login
-  //             if (xhr.status == 401) {
-  //               main.method.logout();
-  //             }
-
-  //             return callbackError(xhr.responseText);
-  //           }
-  //         }
-  //       };
-  //       // envia os dados pra servidor
-  //       xhr.send(dados);
-  //     }
-  //   } catch (error) {
-  //     return callbackError(error);
-  //   }
-  // },
-
-  // centraliza as chamadas de upload
-  // upload: (url, dados, callbackSuccess, callbackError, login = false) => {
-  //   try {
-  //     if (main.method.validaToken(login)) {
-  //       let xhr = new XMLHttpRequest();
-  //       xhr.open("POST", url);
-  //       xhr.setRequestHeader("Mime-Type", "multipart/form-data");
-  //       xhr.setRequestHeader(
-  //         "Authorization",
-  //         main.method.obterValorStorage("token")
-  //       );
-
-  //       xhr.onreadystatechange = function () {
-  //         if (this.readyState == 4) {
-  //           if (this.status == 200) {
-  //             return callbackSuccess(JSON.parse(xhr.responseText));
-  //           } else {
-  //             // se o retorno for não autorizado, redireciona o usuário para o login
-  //             if (xhr.status == 401) {
-  //               main.method.logout();
-  //             }
-
-  //             return callbackError(xhr.responseText);
-  //           }
-  //         }
-  //       };
-  //       xhr.send(dados);
-  //     }
-  //   } catch (error) {
-  //     return callbackError(error);
-  //   }
-  // },
-
-  // método para validar se o token existe (local). É chamado em todas as requisições
-  
   validaToken: (login = false) => {
 
     // verifica se existe o token na sessão
@@ -240,10 +156,6 @@ main.method = {
     } catch (error) {
       console.error('Erro ao buscar clientes:', error);
     }
-  },
-
-  login: () => {
-    console.log('Chamei login do MAIN')
   },
 
   // grava valores no localstorage

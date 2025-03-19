@@ -1,3 +1,4 @@
+import { AxiosHeaders } from "axios";
 import main from "./main";
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -9,8 +10,15 @@ let login = {};
 // chamada para cadastra o usuário
 const cadastrarLogin = document.getElementById('cadastrarLogin');
 cadastrarLogin.addEventListener('click', (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   login.method.criarLogin();
+})
+
+// chamada para logar
+const logar = document.getElementById('logar');
+logar.addEventListener('click', (e) => {
+  // e.preventDefault();
+  login.method.login();
 })
 
 login.event = {
@@ -23,6 +31,7 @@ login.method = {
 
   // Valida os campos
   validarLogin: () => {
+
     let email = document.querySelector("#EmailLogin").value.trim();
     let senha = document.querySelector("#SenhaLogin").value.trim();
 
@@ -51,7 +60,7 @@ login.method = {
     };
 
     // chamada ao método POST - API
-    main.method.post(
+    main.method.post_logar(
       "/login", // rota
       JSON.stringify(dados), // dados - tem que ser string
       (response) => { // callback - sucesso
@@ -61,7 +70,6 @@ login.method = {
           main.method.mensagem(response.message);
           return;
         }
-
         // se o status for sucesso, grava os dados no storage e redireciona para a home
         if (response.status == 'success') {
           // main.method.gravarValorStorage(response.TokenAcesso, 'token')
@@ -85,7 +93,7 @@ login.method = {
     const criarEmail = document.getElementById('criarEmail').value.trim();
     const criarSenha = document.getElementById('criarSenha').value.trim();
 
-    main.method.post(
+    main.method.post_criar(
       "/register",
       JSON.stringify({
         nome: criarNome,
