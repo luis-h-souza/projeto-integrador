@@ -6,28 +6,35 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 let login = {};
 
+// chamada para cadastra o usuário
+const cadastrarLogin = document.getElementById('cadastrarLogin');
+cadastrarLogin.addEventListener('click', (e) => {
+  e.preventDefault();
+  login.method.criarLogin();
+})
+
 login.event = {
   init: () => {
     AOS.init();
-  }
+  },
 }
 
 login.method = {
 
   // Valida os campos
   validarLogin: () => {
-    let email = document.querySelector("#txtEmailLogin").value.trim();
-    let senha = document.querySelector("#txtSenhaLogin").value.trim();
+    let email = document.querySelector("#EmailLogin").value.trim();
+    let senha = document.querySelector("#SenhaLogin").value.trim();
 
     // valida se os campos estão preenchidos
     if (email.length == 0) {
-      app.method.mensagem("Informe o e-mail, por favor.");
-      document.querySelector("#txtEmailLogin").focus();
+      main.method.mensagem("Informe o e-mail, por favor.");
+      document.querySelector("#EmailLogin").focus();
       return;
     }
     if (senha.length == 0) {
-      app.method.mensagem("Informe a senha, por favor.");
-      document.querySelector("#txtSenhaLogin").focus();
+      main.method.mensagem("Informe a senha, por favor.");
+      document.querySelector("#SenhaLogin").focus();
       return;
     }
 
@@ -38,29 +45,31 @@ login.method = {
   // método que faz o login (via API)
   login: (email, senha) => {
     //objeto JSON
-    var dados = {
+    let dados = {
       email: email,
       senha: senha,
     };
 
     // chamada ao método POST - API
-    app.method.post(
+    main.method.post(
       "/login", // rota
       JSON.stringify(dados), // dados - tem que ser string
       (response) => { // callback - sucesso
         if (response.status == "error") { // se o status for erro, exibe a mensagem
-          app.method.mensagem(response.message);
+          console.log(response.message)
+          console.log(response)
+          main.method.mensagem(response.message);
           return;
         }
 
         // se o status for sucesso, grava os dados no storage e redireciona para a home
         if (response.status == 'success') {
-          app.method.gravarValorStorage(response.TokenAcesso, 'token')
-          app.method.gravarValorStorage(response.Nome, 'Nome')
-          app.method.gravarValorStorage(response.Email, 'Email')
-          app.method.gravarValorStorage(response.Logo, 'Logo')
+          // main.method.gravarValorStorage(response.TokenAcesso, 'token')
+          main.method.gravarValorStorage(response.Nome, 'Nome')
+          main.method.gravarValorStorage(response.Email, 'Email')
+          main.method.gravarValorStorage(response.Logo, 'Logo')
 
-          window.location.href = '/painel/home.html'
+          window.location.href = '/pages/login.html'
         }
       },
       (error) => {
@@ -70,11 +79,27 @@ login.method = {
     );
   },
 
-}
+  criarLogin: () => {
 
-// botão de logar
-const login = document.getElementById('criarLogin');
-login.addEventListener('click', () => {
-  login.method.login();
-  main.method.mensagem('logar')
-})
+    const criarNome = document.getElementById('criarNome').value.trim();
+    const criarEmail = document.getElementById('criarEmail').value.trim();
+    const criarSenha = document.getElementById('criarSenha').value.trim();
+
+    main.method.post(
+      "/register",
+      JSON.stringify({
+        nome: criarNome,
+        email: criarEmail,
+        senha: criarSenha,
+      }),
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
+
+  },
+
+}

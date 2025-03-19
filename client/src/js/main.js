@@ -6,22 +6,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 let main = {};
 
+// eventos
 main.event = {
   init: () => {
     AOS.init();
   }
 }
 
-
+// métodos
 main.method = {
-  
 
   // centraliza as chamadas de GET - axios
   get: async (url, callbackSuccess, callbackError, login = false) => {
+    url = "http://localhost:8000/api";
     try {
       // verifica se o token é válido, se for váçido faz a chamad
-      if (app.method.validaToken(login)) {
-        const token = app.method.obterValorStorage("token");
+      if (main.method.validaToken(login)) {
+        const token = main.method.obterValorStorage("token");
         const response = await axios.get(url, {
           headers: { // cabeçalho da requisição
             "Content-Type": "application/json;charset=utf-8",
@@ -32,25 +33,27 @@ main.method = {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        app.method.logout();
+        main.method.logout();
       }
       callbackError(error);
     }
   },
-
+  
   // centraliza as chamadas de POST
   post: async (url, dados, callbackSuccess, callbackError, login = false) => {
+    url = "http://localhost:8000/api";
     try {
-      if (app.method.validaToken(login)) {
-        const token = app.method.obterValorStorage("token");
+      // if (main.method.validaToken(login)) {
+      //   const token = main.method.obterValorStorage("token");
         const response = await axios.post(url, dados, {
           headers: {
+            "cors": false,
             "Content-Type": "application/json;charset=utf-8",
-            "Authorization": token
+            "Authorization": ""//token
           }
         });
         callbackSuccess(response.data);
-      }
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         app.method.logout();
@@ -61,9 +64,10 @@ main.method = {
 
   // centraliza as chamadas de upload
   upload: async (url, dados, callbackSuccess, callbackError, login = false) => {
+    url = "http://localhost:8000/api";
     try {
-      if (app.method.validaToken(login)) {
-        const token = app.method.obterValorStorage("token");
+      if (main.method.validaToken(login)) {
+        const token = main.method.obterValorStorage("token");
         const response = await axios.post(url, dados, {
           headers: {
             "Mime-Type": "multipart/form-data",
@@ -74,7 +78,7 @@ main.method = {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        app.method.logout();
+        main.method.logout();
       }
       callbackError(error);
     }
@@ -83,7 +87,7 @@ main.method = {
 
   // get: (url, callbackSuccess, callbackError, login = false) => {
   //   try {
-  //     if (app.method.validaToken(login)) {
+  //     if (main.method.validaToken(login)) {
   //       let xhr = new XMLHttpRequest();
   //       //abre a conexão passando o verbo GET e a url da requisição
   //       xhr.open("GET", url);
@@ -92,7 +96,7 @@ main.method = {
   //       // seta o token no cabeçalho da requisição - autorização
   //       xhr.setRequestHeader(
   //         "Authorization",
-  //         app.method.obterValorStorage("token")
+  //         main.method.obterValorStorage("token")
   //       );
 
   //       // função que é chamda quando a requisição é finalizada - readyState = 4
@@ -104,7 +108,7 @@ main.method = {
   //           } else {
   //             // se o retorno for não autorizado, redireciona o usuário para o login
   //             if (xhr.status == 401) {
-  //               app.method.logout();
+  //               main.method.logout();
   //             }
 
   //             return callbackError(xhr.responseText);
@@ -122,13 +126,13 @@ main.method = {
   // centraliza as chamadas de POST
   // post: (url, dados, callbackSuccess, callbackError, login = false) => {
   //   try {
-  //     if (app.method.validaToken(login)) {
+  //     if (main.method.validaToken(login)) {
   //       let xhr = new XMLHttpRequest();
   //       xhr.open("POST", url);
   //       xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
   //       xhr.setRequestHeader(
   //         "Authorization",
-  //         app.method.obterValorStorage("token")
+  //         main.method.obterValorStorage("token")
   //       );
 
   //       xhr.onreadystatechange = function () {
@@ -138,7 +142,7 @@ main.method = {
   //           } else {
   //             // se o retorno for não autorizado, redireciona o usuário para o login
   //             if (xhr.status == 401) {
-  //               app.method.logout();
+  //               main.method.logout();
   //             }
 
   //             return callbackError(xhr.responseText);
@@ -156,13 +160,13 @@ main.method = {
   // centraliza as chamadas de upload
   // upload: (url, dados, callbackSuccess, callbackError, login = false) => {
   //   try {
-  //     if (app.method.validaToken(login)) {
+  //     if (main.method.validaToken(login)) {
   //       let xhr = new XMLHttpRequest();
   //       xhr.open("POST", url);
   //       xhr.setRequestHeader("Mime-Type", "multipart/form-data");
   //       xhr.setRequestHeader(
   //         "Authorization",
-  //         app.method.obterValorStorage("token")
+  //         main.method.obterValorStorage("token")
   //       );
 
   //       xhr.onreadystatechange = function () {
@@ -172,7 +176,7 @@ main.method = {
   //           } else {
   //             // se o retorno for não autorizado, redireciona o usuário para o login
   //             if (xhr.status == 401) {
-  //               app.method.logout();
+  //               main.method.logout();
   //             }
 
   //             return callbackError(xhr.responseText);
@@ -191,7 +195,7 @@ main.method = {
   validaToken: (login = false) => {
 
     // verifica se existe o token na sessão
-    var tokenAtual = app.method.obterValorStorage("token");
+    let tokenAtual = main.method.obterValorStorage("token");
 
     // validação se o token não existe
     if (
@@ -201,7 +205,7 @@ main.method = {
         tokenAtual == "null") &&
       !login
     ) {
-      window.location.href = "/painel/login.html";
+      window.location.href = "/login.html";
       return false;
     }
     return true;
@@ -214,25 +218,24 @@ main.method = {
     const btnReserva = document.getElementById('btn-reserva');
     const reservas = document.getElementById('reservas');
 
-    const baseURL = 'http://localhost/simple_api/public/api';
+    const baseURL = 'http://localhost:8000/api';
     const tabela = document.querySelector("#tabela-reservas");
 
     try {
-      const response = await axios.get(`${baseURL}/clients`);
-      let clientes = response.data.data.data;
+      const response = await axios.get(`${baseURL}/login`);
+      let usuario = response.data;
 
-      console.log(clientes);
+      console.log(usuario);
 
-      clientes.forEach(cliente => {
+      usuario.forEach(cliente => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${cliente.id}</td>
-          <td>${cliente.nome}</td>
-          <td>${cliente.email}</td>
-          <td>${cliente.created_at}</td>
-          <td>${new Date(cliente.updated_at).toLocaleString()}</td>
+          <p>${cliente.id}</p>
+          <p>${cliente.nome}</p>
+          <p>${cliente.email}</p>
+          <p>${cliente.senha}</p>
         `;
-        tabela.appendChild(tr);
+        console.log(tr);
       });
     } catch (error) {
       console.error('Erro ao buscar clientes:', error);
@@ -286,5 +289,4 @@ main.method = {
 
 }
 
-
-import axios from 'axios';
+export default main;

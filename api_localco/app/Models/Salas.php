@@ -6,19 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salas extends Model
 {
-   protected $table = 'salas';
+    protected $table = 'salas';
 
-   protected $primaryKey = 'id_sala_pk';
+    protected $primaryKey = 'id_sala_pk';
 
-   protected $KeyType = 'int';
+    protected $KeyType = 'int';
 
-   public $incrementing = true;
+    public $incrementing = true;
 
-   protected $fill = ['tipo_sala','descricao_sala','capac_pessoas','preco_base'];
+    protected $fill = ['tipo_sala', 'descricao_sala', 'capac_pessoas', 'preco_base', 'foto'];
 
-   public $timestamps = false;
-
-
+    public $timestamps = false;
 }
-
-

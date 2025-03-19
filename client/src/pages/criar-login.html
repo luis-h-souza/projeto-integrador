@@ -36,29 +36,24 @@
 
           <form class="my-form">
             <div class="text-field">
+              <label for="nome">Nome:</label>
+              <input class="col-6" type="text" id="criarNome" name="nome" placeholder="Seu nome" required />
+              <img alt="Usuário Icon" title="Nome Icon" src="../assets/icon/email.svg" />
+            </div>
+            <div class="text-field">
               <label for="email">E-mail:</label>
-              <input class="col-6" type="email" id="email" name="email" placeholder="Seu e-mail" required />
+              <input class="col-6" type="email" id="criarEmail" name="email" placeholder="Seu e-mail" required />
               <img alt="Email Icon" title="Email Icon" src="../assets/icon/email.svg" />
             </div>
             <div class="text-field">
               <label for="password">Senha:</label>
-              <input id="criarPassword" type="password" name="password" placeholder="Sua senha" title="Minimum 6 char ers at 
-                                      least 1 Alphabet, 1 Number and 1 Symbol"
-                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$" required />
-              <img alt="Password Icon" title="Password Icon" src="../assets/icon/password.svg" />
-            </div>
-            <div class="text-field">
-              <label for="password">Confirmar Senha:</label>
-              <input id="password" type="password" name="password" placeholder="Sua senha" title="Minimum 6 characters at 
-                                      least 1 Alphabet, 1 Number and 1 Symbol"
-                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$" required />
+              <input id="criarSenha" type="password" name="password" placeholder="Sua senha" required />
               <img alt="Password Icon" title="Password Icon" src="../assets/icon/password.svg" />
             </div>
 
-            <input type="submit" class="my-form__button" value="Cadastrar" />
+            <button type="submit" class="my-form__button" value="Cadastrar" id="cadastrarLogin">Cadastrar</button>
 
             <div class="my-form__actions">
-              
               <div class="my-form__signup">
                 <a href="./login.html"> Voltar </a>
               </div>
@@ -83,9 +78,9 @@
     crossorigin="anonymous"></script>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+  
+  <script type="module" src="../js/main.js" defer></script>
+  <script type="module" src="../js/login.js" defer></script>
 
 </body>
 
