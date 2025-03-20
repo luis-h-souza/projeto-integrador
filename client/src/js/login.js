@@ -1,25 +1,39 @@
 import { AxiosHeaders } from "axios";
 import main from "./main";
 
+let login = {};
+
 document.addEventListener("DOMContentLoaded", function (event) {
   main.event.init();
 })
 
-let login = {};
+
 
 // chamada para cadastra o usuário
+document.addEventListener('DOMContentLoaded', function () {
 const cadastrarLogin = document.getElementById('cadastrarLogin');
-cadastrarLogin.addEventListener('click', (e) => {
-  // e.preventDefault();
-  login.method.criarLogin();
+  cadastrarLogin.addEventListener('click', (e) => {
+    // e.preventDefault();
+    login.method.criarLogin();
+  })
 })
 
 // chamada para logar
-const logar = document.getElementById('logar');
-logar.addEventListener('click', (e) => {
-  // e.preventDefault();
-  login.method.login();
-})
+document.addEventListener('DOMContentLoaded', function () {
+  const logar = document.getElementById('logar');
+  if (logar) {
+    logar.addEventListener('click', function () {
+      logar.addEventListener('submit', (e) => {
+        e.preventDefault();
+        login.method.validarLogin();
+      })
+    });
+  } else {
+    console.error('Elemento não encontrado');
+  }
+});
+
+
 
 login.event = {
   init: () => {
@@ -72,12 +86,12 @@ login.method = {
         }
         // se o status for sucesso, grava os dados no storage e redireciona para a home
         if (response.status == 'success') {
-          // main.method.gravarValorStorage(response.TokenAcesso, 'token')
+          main.method.gravarValorStorage(response.api_token, 'token')
           main.method.gravarValorStorage(response.Nome, 'Nome')
           main.method.gravarValorStorage(response.Email, 'Email')
-          main.method.gravarValorStorage(response.Logo, 'Logo')
+          // main.method.gravarValorStorage(response.Logo, 'Logo')
 
-          window.location.href = '/pages/login.html'
+          window.location.href = '../pages/galeria-salas.html'
         }
       },
       (error) => {
