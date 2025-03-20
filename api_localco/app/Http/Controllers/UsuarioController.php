@@ -16,7 +16,11 @@ class UsuarioController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuario,email',
+<<<<<<< HEAD
             'senha' => 'required|string|min:6'
+=======
+            'senha' => 'required|string'
+>>>>>>> c2311048bd1afe62bc096281bdbdbe866139837f
         ]);
 
         $usuario = Usuario::create([
@@ -27,16 +31,26 @@ class UsuarioController extends Controller
         return response()->json(['message' => 'Usuário registrado com sucesso!'], 201);
     }
 
+<<<<<<< HEAD
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email',
+=======
+    public function login(Request $request){
+        $request->validate([
+             'email' => 'required|string|email',
+>>>>>>> c2311048bd1afe62bc096281bdbdbe866139837f
             'senha' => 'required|string'
         ]);
 
         $usuario = Usuario::where('email', $request->email)->first();
 
+<<<<<<< HEAD
         if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
+=======
+        if(!$usuario || !Hash::check($request->senha,$usuario->senha)){
+>>>>>>> c2311048bd1afe62bc096281bdbdbe866139837f
             return response()->json(['message' => 'Usuario Inválido'], 401);
         }
 
@@ -47,10 +61,16 @@ class UsuarioController extends Controller
         return response()->json(['token' => $token]);
     }
 
+<<<<<<< HEAD
     public function logout(Request $request)
     {
         $usuario = Auth::guard('api')->user();
         if ($usuario) {
+=======
+    public function logout(Request $request){
+        $usuario = Auth::guard('api')->user();
+        if ($usuario){
+>>>>>>> c2311048bd1afe62bc096281bdbdbe866139837f
             $usuario->token = null;
             $usuario->save();
         }

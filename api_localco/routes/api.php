@@ -11,8 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [UsuarioController::class,'register']);
+<<<<<<< HEAD
 Route::post('/login', [UsuarioController::class, 'login']);
 Route::apiResource( 'salas', SalaController::class);
+=======
+Route::post('/login', [UsuarioController::class, 'login'])->name('login');
+>>>>>>> c2311048bd1afe62bc096281bdbdbe866139837f
 
 Route::middleware('auth:api')->group(function (){
 
