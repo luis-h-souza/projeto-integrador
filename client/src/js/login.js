@@ -8,23 +8,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
 })
 
 // chamada para cadastra o usuário
-// document.getElementById('cadastrarLogin').addEventListener('DOMContentLoaded', function () {
-// const cadastrarLogin = 
-//   cadastrarLogin.addEventListener('click', (e) => {
-//     // e.preventDefault();
-//     login.method.criarLogin();
-//   })
-// })
+document.getElementById('cadastrarLogin').addEventListener('DOMContentLoaded', function () {
+const cadastrarLogin = 
+  cadastrarLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    login.method.criarLogin();
+  })
+})
 
 // chamada para logar
-document.getElementById('logar').addEventListener('click', (e) => {
-  e.preventDefault();
-  const EmailLogin = document.getElementById('EmailLogin').value.trim();
-  const SenhaLogin = document.getElementById('SenhaLogin').value.trim();
+// document.getElementById('logar').addEventListener('click', (e) => {
+//   e.preventDefault();
+//   const EmailLogin = document.getElementById('EmailLogin').value.trim();
+//   const SenhaLogin = document.getElementById('SenhaLogin').value.trim();
 
-  login.method.login(EmailLogin, SenhaLogin);
+//   login.method.login(EmailLogin, SenhaLogin);
 
-});
+// });
 
 
 login.event = {
@@ -95,6 +95,7 @@ login.method = {
       return formData;
   },
 
+  // método para criar usuário (via API)
   criarLogin: () => {
 
     const criarNome = document.getElementById('criarNome').value.trim();

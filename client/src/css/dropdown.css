@@ -1,0 +1,177 @@
+
+:root {
+    --primary-light: #fc66489c;
+    --dropdown-bg: #fcfcfc;
+}
+
+.navigation__group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.navigation__group .icon {
+    cursor: pointer;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.5rem;
+    background: var(--dropdown-bg);
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+}
+
+.navigation__group .icon:hover {
+    transform: scale(1.1);
+}
+
+.profile__btn {
+    background: none;
+    color: inherit;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.profile__btn:hover {
+    transform: scale(1.1);
+}
+
+.profile__btn img,
+.profile__avatar {
+    display: block;
+    width: 3.125rem;
+    height: 3.125rem;
+    cursor: pointer;
+    object-fit: cover;
+    border-radius: 50%;
+    outline: 0.5px solid var(--primary-light);
+}
+
+.profile__avatar__drop {
+    display: block;
+    width: 3.125rem;
+    height: 3.125rem;
+    cursor: pointer;
+    object-fit: cover;
+    border-radius: 50%;
+    outline: none;
+}
+
+.profile__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.profile__name {
+    font-size: 1.15rem;
+}
+
+.profile__email {
+    font-size: 0.95rem;
+}
+
+.dropdown__wrapper {
+    width: 19rem;
+    top: 5.25rem;
+    right: 1rem;
+    z-index: 100;
+    padding: 1rem;
+    position: absolute;
+    border-radius: 0.75rem;
+    background: var(--dropdown-bg);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text);
+    gap: 0.25rem;
+    animation: fadeOutAnimation ease-in-out 0.3s forwards;
+}
+
+.dropdown__wrapper--fade-in {
+    animation: fadeInAnimation ease-in-out 0.3s forwards;
+}
+
+.none {
+    display: none;
+}
+
+.hide {
+    opacity: 0;
+    visibility: hidden;
+    animation: fadeOutAnimation ease-in-out 0.3s forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes fadeOutAnimation {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.divider {
+    width: 100%;
+    padding: 0;
+    margin: 0.75rem 0;
+    border: 1px solid var(--color-seta);
+}
+
+nav>ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.25rem;
+}
+
+nav>ul>li {
+    height: 3rem;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.5rem;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 0.5rem;
+    width: 100%;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+nav>ul>li:hover {
+    background: var(--primary-light);
+    color: var(--color-text);
+}
+
+nav>ul>li>svg {
+    stroke: var(--color-text);
+    height: 1.75rem;
+    width: 1.75rem;
+}
+
+nav>ul>li:hover>svg {
+    stroke: var(--color-text);
+}

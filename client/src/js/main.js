@@ -159,13 +159,14 @@ main.method = {
   },
 
   // grava valores no localstorage
-  gravarValorStorage: (valor, local) => {
-    localStorage[local] = valor;
+  gravarValorStorage: (valor, chave) => {
+    localStorage.setItem(chave, JSON.stringify(valor));
   },
 
   // obtem um valor do localstorage
-  obterValorStorage: (local) => {
-    return localStorage[local];
+  obterValorStorage: (chave) => {
+    const valor = localStorage.getItem(chave)
+    return valor ? JSON.stringify(valor) : null;
   },
 
   // remove uma sessão

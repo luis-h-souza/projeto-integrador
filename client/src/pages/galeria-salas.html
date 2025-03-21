@@ -25,6 +25,7 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/dropdown.css">
 </head>
 
 <body>
@@ -62,17 +63,56 @@
                   <li class="nav-item mx-md-3">
                     <a class="nav-link active" aria-current="page" href="./pages/contato.html">Contato</a>
                   </li>
-                  <li class="nav-item mx-md-3">
+                  <!-- <li class="nav-item mx-md-3">
                     <input type="button" class="nav-link active" aria-current="page" href="./pages/blog.html"
                       value="SAIR" />
-                  </li>
+                  </li> -->
                 </ul>
 
               </div>
             </div>
 
-            <a id="logout" class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center"
-              target="_blank">Sair</a>
+            <span class="navigation__group">
+              <button type="button" class="profile__btn">
+                  <img  src="../assets/img/default-avatar.png" alt="Natalia">
+              </button>
+            </span>
+
+            <div class="dropdown__wrapper hide dropdown__wrapper--fade-in none">
+              <nav>
+                  <div class="profile__wrapper">
+                      <img class="profile__avatar__drop " src="../assets/img/default-avatar.png" alt="Natalia">
+                      <div class="profile__info">
+                        <!-- NOME E EMAIL -->
+                          <h2 class="profile__name">Natalia Taylor</h2>
+                          <p class="profile__email">natalia.taylor@gmail.com</p>
+                      </div>
+                  </div>  
+                  <hr class="divider">
+                  <ul>
+                      <li>
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M15 19l2 2l4 -4" /></svg>    
+                          Conta
+                      </li>
+                      
+                      <li>
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>                            
+                          Configurações
+                      </li>
+                      
+                  </ul>
+                  
+                  <hr class="divider">
+                  <ul>
+                      <li id="logout">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>Logout
+                      </li>
+                  </ul>
+              </nav>
+          </div>
+
+            <!-- <a id="logout" class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center"
+              target="_blank">Sair</a> -->
 
           </div>
         </nav>
@@ -160,6 +200,7 @@
 
   <script type="module" src="../js/main.js"></script>
   <script type="module" src="../js/galeriaSalas.js"></script>
+  <script src="../js/dropdown.js"></script>
 
 </body>
 

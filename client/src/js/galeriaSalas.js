@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
   galerias.event.init();
 
   document.getElementById('logout').addEventListener('click', () => {
-    galerias.method.sair();
+    // galerias.method.sair();
+    main.method.logout();
   })
 })
 
