@@ -9,6 +9,10 @@
   <meta name="description"
     content="Site da empresa LocalCo que é voltado para o Coworking, que tem por finalidade o aluguel de salas para trabalho" />
 
+  <meta http-equiv="cache-control" content="max-age=0" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+
   <!-- Favicon -->
   <link rel="icon" href="../assets/icon/Favicon.ico" type="image/x-icon" />
 
@@ -59,15 +63,16 @@
                     <a class="nav-link active" aria-current="page" href="./pages/contato.html">Contato</a>
                   </li>
                   <li class="nav-item mx-md-3">
-                    <a class="nav-link active" aria-current="page" href="./pages/blog.html">Blog</a>
+                    <input type="button" class="nav-link active" aria-current="page" href="./pages/blog.html"
+                      value="SAIR" />
                   </li>
                 </ul>
 
               </div>
             </div>
 
-            <a class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center "
-              href="./pages/login.html" target="_blank">Login</a>
+            <a id="logout" class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center"
+              target="_blank">Sair</a>
 
           </div>
         </nav>
@@ -91,86 +96,38 @@
 
       <hr class="divisor text-center m-auto m-5">
 
-      <div class="row row-cols-1 row-cols-md-3 g-4 mt-5">
-        <div class="col">
+      <div id="card" class="row row-cols-1 row-cols-md-2 g-4 mt-5">
+
+        <div  class="col-6">
           <div class="card h-100 shadow">
             <img src="../assets/img/oq2.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="h5 card-title text-start">Card title</p>
-              <p class="card-text text-description text-start">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text text-description text-start">This is a wider card with supporting text below as a
+                natural lead-in to additional content. This content is a little bit longer.</p>
             </div>
             <div class="card-footer text-end">
+              <small class="text-muted">Capaciade para </small>
               <small class="text-muted">R$ valor pelo BD</small>
             </div>
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-6">
           <div class="card h-100 shadow">
             <img src="../assets/img/oq3.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="h5 card-title text-start">Card title</p>
-              <p class="card-text text-description text-start">This card has supporting text below as a natural lead-in to additional content.</p>
+              <p class="card-text text-description text-start">This card has supporting text below as a natural lead-in
+                to additional content.</p>
             </div>
-            <div class="card-footer text-end">
+            <div class="card-footer text-end d-flex justify-content-between">
+              <small class="text-muted">Capaciade para </small>
               <small class="text-muted">R$ valor pelo BD</small>
             </div>
           </div>
         </div>
 
-        <div class="col">
-          <div class="card h-100 shadow">
-            <img src="../assets/img/oq4.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="h5 card-title text-start">Card title</p>
-              <p class="card-text text-description text-start">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-            </div>
-            <div class="card-footer text-end">
-              <small class="text-muted">R$ valor pelo BD</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row row-cols-1 row-cols-md-3 mt-2 g-4">
-        <div class="col">
-          <div class="card h-100 shadow">
-            <img src="../assets/img/compartilhada.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="h5 card-title text-start">Card title</p>
-              <p class="card-text text-description text-start">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card-footer text-end">
-              <small class="text-muted">R$ valor pelo BD</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card h-100 shadow">
-            <img src="../assets/img/slprivativa02.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="h5 card-title text-start">Card title</p>
-              <p class="card-text text-description text-start">This card has supporting text below as a natural lead-in to additional content.</p>
-            </div>
-            <div class="card-footer text-end">
-              <small class="text-muted">R$ valor pelo BD</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card h-100 shadow">
-            <img src="../assets/img/reuniao.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="h5 card-title text-start">Sala lorem</p>
-              <p class="card-text text-description text-start">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-            </div>
-            <div class="card-footer text-end">
-              <small class="text-muted">R$ valor pelo BD</small>
-            </div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -200,13 +157,9 @@
     crossorigin="anonymous"></script>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
 
   <script type="module" src="../js/main.js"></script>
-
-  <script src="../js/validacao.js"></script>
+  <script type="module" src="../js/galeriaSalas.js"></script>
 
 </body>
 

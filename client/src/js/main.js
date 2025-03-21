@@ -18,7 +18,7 @@ main.method = {
 
   // centraliza as chamadas de GET - axios
   get: async (url, callbackSuccess, callbackError, login = false) => {
-    url = "http://localhost:8000/api";
+    url = "http://localhost:8000/api/salas";
     try {
       // verifica se o token é válido, se for váçido faz a chamad
       if (main.method.validaToken(login)) {
@@ -60,10 +60,10 @@ main.method = {
       }
       callbackError(error);
     }
-    window.location.href = "../pages/login.html"
+    window.location.href = "/login.html"
   },
 
-  post_logar: async (url, dados, callbackSuccess, callbackError, login = false) => {
+  post: async (url, dados, callbackSuccess, callbackError, login = false) => {
     url = "http://localhost:8000/api/login";
     try {
       // if (main.method.validaToken(login)) {
@@ -83,7 +83,7 @@ main.method = {
       }
       callbackError(error);
     }
-    window.location.href = "../pages/login.html"
+    window.location.href = "/galeria-salas.html"
   },
 
   // centraliza as chamadas de upload

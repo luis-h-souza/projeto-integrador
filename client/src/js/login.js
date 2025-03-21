@@ -1,4 +1,4 @@
-import { AxiosHeaders } from "axios";
+import axios, { AxiosHeaders } from "axios";
 import main from "./main";
 
 let login = {};
@@ -7,32 +7,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
   main.event.init();
 })
 
-
-
 // chamada para cadastra o usuário
-document.addEventListener('DOMContentLoaded', function () {
-const cadastrarLogin = document.getElementById('cadastrarLogin');
-  cadastrarLogin.addEventListener('click', (e) => {
-    // e.preventDefault();
-    login.method.criarLogin();
-  })
-})
+// document.getElementById('cadastrarLogin').addEventListener('DOMContentLoaded', function () {
+// const cadastrarLogin = 
+//   cadastrarLogin.addEventListener('click', (e) => {
+//     // e.preventDefault();
+//     login.method.criarLogin();
+//   })
+// })
 
 // chamada para logar
-document.addEventListener('DOMContentLoaded', function () {
-  const logar = document.getElementById('logar');
-  if (logar) {
-    logar.addEventListener('click', function () {
-      logar.addEventListener('submit', (e) => {
-        e.preventDefault();
-        login.method.validarLogin();
-      })
-    });
-  } else {
-    console.error('Elemento não encontrado');
-  }
-});
+document.getElementById('logar').addEventListener('click', (e) => {
+  e.preventDefault();
+  const EmailLogin = document.getElementById('EmailLogin').value.trim();
+  const SenhaLogin = document.getElementById('SenhaLogin').value.trim();
 
+  login.method.login(EmailLogin, SenhaLogin);
+
+});
 
 
 login.event = {
@@ -66,39 +58,41 @@ login.method = {
   },
 
   // método que faz o login (via API)
-  login: (email, senha) => {
-    //objeto JSON
-    let dados = {
-      email: email,
-      senha: senha,
-    };
+  login: (EmailLogin, SenhaLogin) => {
 
-    // chamada ao método POST - API
-    main.method.post_logar(
-      "/login", // rota
-      JSON.stringify(dados), // dados - tem que ser string
-      (response) => { // callback - sucesso
-        if (response.status == "error") { // se o status for erro, exibe a mensagem
-          console.log(response.message)
-          console.log(response)
-          main.method.mensagem(response.message);
-          return;
-        }
-        // se o status for sucesso, grava os dados no storage e redireciona para a home
-        if (response.status == 'success') {
-          main.method.gravarValorStorage(response.api_token, 'token')
-          main.method.gravarValorStorage(response.Nome, 'Nome')
-          main.method.gravarValorStorage(response.Email, 'Email')
-          // main.method.gravarValorStorage(response.Logo, 'Logo')
+    const formData = new FormData();
+    formData.append('email', EmailLogin);
+    formData.append('senha', SenhaLogin);
 
-          window.location.href = '../pages/galeria-salas.html'
+    fetch('http://localhost:8000/api/login', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: formData
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-      },
-      (error) => {
-        console.error(error);
-      },
-      true // com token
-    );
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+
+        main.method.gravarValorStorage(data.api_token, 'token');
+        main.method.gravarValorStorage(data.Nome, 'Nome');
+        main.method.gravarValorStorage(data.Email, 'Email');
+
+        return data, window.location.href = '../pages/galeria-salas.html';
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        main.method.mensagem("Login failed. Please check your credentials.");
+      });
+
+      return formData;
   },
 
   criarLogin: () => {
@@ -125,3 +119,5 @@ login.method = {
   },
 
 }
+
+export default login;
