@@ -65,7 +65,6 @@ galerias.method = {
         console.error(error);
       }
     )
-
   },
 }
 
