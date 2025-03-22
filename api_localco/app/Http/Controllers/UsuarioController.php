@@ -44,7 +44,7 @@ class UsuarioController extends Controller
         $usuario->api_token = $token;
         $usuario->save();
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token, 'usuario' => $usuario->nome]);
     }
 
     public function logout(Request $request)
