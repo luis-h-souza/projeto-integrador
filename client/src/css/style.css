@@ -979,3 +979,9 @@ h3 {
 .item.x:hover{
   color: white;
 }
+
+.tipo_sala {
+  cursor: pointer;
+  text-decoration: none;
+  
+}

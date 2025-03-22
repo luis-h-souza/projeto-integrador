@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
   galerias.event.init();
 
   document.getElementById('logout').addEventListener('click', () => {
-    // galerias.method.sair();
     main.method.logout();
   })
 })
+
+console.log(main.method.obterValorStorage("token"))
 
 let galerias = {};
 
@@ -16,25 +17,14 @@ let galerias = {};
 galerias.event = {
 
   init: () => {
-    galerias.method.tokenStorage();
+    main.method.validaToken();
     galerias.method.buscarSalas();
+    galerias.method.dropdowm()
   },
 }
 
 // métodos
 galerias.method = {
-
-  sair: () => {
-    main.method.removerSessao("token");
-    main.method.removerSessao("Nome");
-    main.method.removerSessao("Email");
-
-    main.method.logout();
-  },
-
-  tokenStorage: () => {
-    main.method.obterValorStorage("token");
-  },
 
   buscarSalas: () => {
     main.method.get(
@@ -49,7 +39,7 @@ galerias.method = {
                   <div class="card h-100 shadow ${dados.id_sala_pk}">
                       <img src="${dados.foto}" class="card-img-top" alt="...">
                           <div class="card-body">
-                            <p class="h5 card-title text-start">${dados.tipo_sala}</p>
+                            <a class='tipo_sala'><p class="h5 card-title text-start">${dados.tipo_sala}</p></a>
                             <p class="card-text text-description text-start py-3">${dados.descricao_sala}</p>
                           </div>
                         <div class="card-footer text-end d-flex justify-content-between py-3>
@@ -66,6 +56,19 @@ galerias.method = {
         console.error(error);
       }
     )
+  },
+
+  dropdowm: () => {
+    const profileInfo = document.getElementById('profileInfo');
+    const storageEmail = main.method.obterValorStorage('email');
+    const storageNome = main.method.obterValorStorage('nome');
+    storageEmail.replace(/"/g,"")
+    storageNome.replaceAll("\"", "")
+    
+    profileInfo.innerHTML = `
+      <h2 id="profile__name" class="profile__name">${storageNome}</h2>
+      <p id="profile__email" class="profile__email">${storageEmail}</p>
+    `
   },
 }
 

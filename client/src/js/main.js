@@ -40,11 +40,9 @@ main.method = {
   },
   
   // centraliza as chamadas de POST
-  post_criar: async (url, dados, callbackSuccess, callbackError, login = false) => {
+  post_criar: async (url, dados, callbackSuccess, callbackError) => {
     url = "http://localhost:8000/api/register";
     try {
-      // if (main.method.validaToken(login)) {
-      //   const token = main.method.obterValorStorage("token");
         const response = await axios.post(url, dados, {
           headers: {
             "cors": false,
@@ -56,11 +54,11 @@ main.method = {
       
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        app.method.logout();
+        main.method.logout();
       }
       callbackError(error);
     }
-    window.location.href = "/login.html"
+    window.location.href = "../pages/login.html"
   },
 
   post: async (url, dados, callbackSuccess, callbackError, login = false) => {
@@ -159,8 +157,8 @@ main.method = {
   },
 
   // grava valores no localstorage
-  gravarValorStorage: (valor, chave) => {
-    localStorage.setItem(chave, JSON.stringify(valor));
+  gravarValorStorage: (chave, valor) => {
+    localStorage.setItem(chave, valor);
   },
 
   // obtem um valor do localstorage

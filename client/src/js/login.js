@@ -7,24 +7,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
   main.event.init();
 })
 
-// chamada para cadastra o usuário
-document.getElementById('cadastrarLogin').addEventListener('DOMContentLoaded', function () {
-const cadastrarLogin = 
-  cadastrarLogin.addEventListener('click', (e) => {
-    e.preventDefault();
-    login.method.criarLogin();
-  })
-})
-
 // chamada para logar
-// document.getElementById('logar').addEventListener('click', (e) => {
-//   e.preventDefault();
-//   const EmailLogin = document.getElementById('EmailLogin').value.trim();
-//   const SenhaLogin = document.getElementById('SenhaLogin').value.trim();
+document.getElementById('logar').addEventListener('click', (e) => {
+  e.preventDefault();
+  const EmailLogin = document.getElementById('EmailLogin').value.trim();
+  const SenhaLogin = document.getElementById('SenhaLogin').value.trim();
 
-//   login.method.login(EmailLogin, SenhaLogin);
-
-// });
+  login.method.login(EmailLogin, SenhaLogin);
+});
 
 
 login.event = {
@@ -78,11 +68,10 @@ login.method = {
         return response.json();
       })
       .then(data => {
-        console.log(data);
 
-        main.method.gravarValorStorage(data.api_token, 'token');
-        main.method.gravarValorStorage(data.Nome, 'Nome');
-        main.method.gravarValorStorage(data.Email, 'Email');
+        main.method.gravarValorStorage('token', data.token);
+        main.method.gravarValorStorage('nome', data.usuario);
+        main.method.gravarValorStorage('email', EmailLogin);
 
         return data, window.location.href = '../pages/galeria-salas.html';
 
@@ -93,30 +82,6 @@ login.method = {
       });
 
       return formData;
-  },
-
-  // método para criar usuário (via API)
-  criarLogin: () => {
-
-    const criarNome = document.getElementById('criarNome').value.trim();
-    const criarEmail = document.getElementById('criarEmail').value.trim();
-    const criarSenha = document.getElementById('criarSenha').value.trim();
-
-    main.method.post_criar(
-      "/register",
-      JSON.stringify({
-        nome: criarNome,
-        email: criarEmail,
-        senha: criarSenha,
-      }),
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.error(error);
-      }
-    )
-
   },
 
 }
