@@ -18,7 +18,7 @@ class SalaController extends Controller
         'descricao_sala' => 'required|string',
         'capac_pessoas' => 'required|integer',
         'preco_base' => 'required|numeric',
-        'sala' => 'required'
+        'foto' => 'required'
     ]);
 
     $salas = Salas::create($data);
@@ -44,7 +44,7 @@ public function update(Request $request, $id_sala_pk){
         'descricao_sala' => 'required|string',
         'capac_pessoas' => 'required|integer',
         'preco_base' => 'required|numeric',
-        'sala' => 'required'
+        'foto' => 'required'
     ]);
 
     $salas->update($data);
