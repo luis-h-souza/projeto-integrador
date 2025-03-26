@@ -48,6 +48,8 @@ class PsJuridicaController extends Controller
         if(!$juridico){
             return response()->json(['error'=> 'Cnjp não encontrado'],200);
         }
+        $juridico->delete();
+        return response()->json(["message" => "Cnpj deletado com sucesso"], 200);
     }
 
 }
