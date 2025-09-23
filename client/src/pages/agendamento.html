@@ -21,6 +21,7 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/dropdown.css">
 </head>
 
 <body>
@@ -59,16 +60,70 @@
                   <li class="nav-item mx-md-3">
                     <a class="nav-link active" aria-current="page" href="./pages/contato.html">Contato</a>
                   </li>
-                  <li class="nav-item mx-md-3">
-                    <a class="nav-link active" aria-current="page" href="./pages/blog.html">Blog</a>
-                  </li>
                 </ul>
 
               </div>
             </div>
 
-            <a class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center "
-              href="./pages/login.html" target="_blank">Login</a>
+            <span class="navigation__group">
+              <button type="button" class="profile__btn">
+                <img src="../assets/img/default-avatar.png" alt="Natalia">
+              </button>
+            </span>
+
+            <div class="dropdown__wrapper hide dropdown__wrapper--fade-in none">
+              <nav>
+                <div class="profile__wrapper">
+                  <img class="profile__avatar__drop " src="../assets/img/default-avatar.png" alt="Natalia">
+                  <div id="profileInfo" class="profile__info">
+                    <!-- NOME E EMAIL -->
+                    <!-- <h2 id="profile__name" class="profile__name">Natalia Taylor</h2>
+                          <p id="profile__email" class="profile__email">natalia.taylor@gmail.com</p> -->
+                  </div>
+                </div>
+                <hr class="divider">
+                <ul>
+                  <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                      <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                      <path d="M15 19l2 2l4 -4" />
+                    </svg>
+                    Conta
+                  </li>
+
+                  <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path
+                        d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                      <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                    </svg>
+                    Configurações
+                  </li>
+
+                </ul>
+
+                <hr class="divider">
+                <ul>
+                  <li id="logout">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                      <path d="M9 12h12l-3 -3" />
+                      <path d="M18 15l3 -3" />
+                    </svg>Logout
+                  </li>
+                </ul>
+              </nav>
+            </div>
 
           </div>
         </nav>
@@ -80,31 +135,25 @@
 
   <section>
     <div class="container-fluid p-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-6 mt-4">
-            <img class="img-fluid rounded-4" src="../assets/img/compartilhada.jpg" alt="" />
-          </div>
-          <div class="col-6 mt-4">
-            <p class="h3">Título da sala</p>
-            <p class="text-start text-description mt-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae blanditiis necessitatibus, veritatis iste
-              mollitia, recusandae quos excepturi ipsum dolor delectus aperiam magnam et aut ab voluptatum, nisi ea vitae
-              tempora. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae blanditiis necessitatibus, veritatis
-              iste mollitia, recusandae quos excepturi ipsum dolor delectus aperiam magnam et aut ab voluptatum, nisi ea
-              vitae tempora.</p>
-            <!-- <p class="h5">R$ 00,00</p> -->
+      <div class="container-fluid">
+        <div class="row m-0">
 
-              <div class="row mt-4">
+          <div class="col-12 mt-2 container-img p-0">
+            <img class="img-fluid rounded-4" src="../assets/img/compartilhada.jpg" alt="imagem da sala" />
+
+            <div class="container-agendamento img-fluid rounded-4" id="dataAgendamento">
+              <div class="container text-center mt-5">
+
                 <form class="needs-validation d-flex justify-content-around" novalidate>
-                  <div class="col-md-4">
-                    <label for="data" class="contato-description form-label">Data</label>
-                    <input type="date" class="form-control form-control-lg" id="data" required>
+                  <div class="col-md-6 pe-2">
+                    <label for="data" class="form-label data-agendatemno color-agendamento">Data de entrada</label>
+                    <input type="date" class="form-control form-control-lg" id="data" required />
                     <div class="invalid-feedback">
                       Digite uma data válida!
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <label for="data" class="contato-description form-label">Data</label>
+                  <div class="col-md-6 mx-3">
+                    <label for="data" class="form-label data-agendatemno color-agendamento">Data de saída</label>
                     <input type="date" class="form-control form-control-lg" id="data" required>
                     <div class="invalid-feedback">
                       Digite uma data válida!
@@ -112,88 +161,108 @@
                   </div>
                 </form>
               </div>
-              <p class="h5 text-start mt-4">Valor: R$ 00,00</p>
-
+            </div>
           </div>
+
         </div>
 
+        <div class="col-10 mt-4 m-auto">
+          <!-- Informações da Sala -->
+          <div class="row">
+            <div class="col-lg-12 m-auto mt-4">
+              <h2 class="h3 fz-5 mb-4" id="tituloSala">Título da sala</h2>
+              <p class="text-center text-description mb-4" id="descricaoSala">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae
+                blanditiis necessitatibus, veritatis iste
+                mollitia, recusandae quos excepturi ipsum dolor delectus aperiam magnam et aut ab voluptatum, nisi ea vitae
+                tempora. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae blanditiis necessitatibus, veritatis
+                iste mollitia, recusandae quos excepturi ipsum dolor delectus aperiam magnam et aut ab voluptatum, nisi ea
+                vitae tempora.</p>
+            </div>
+            
+            <div class="col-lg-4 m-auto mt-4">
+              <div class="card bg-light p-3">
+                <h5 class="card-title text-center mb-3">Informações da Sala</h5>
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-people-fill text-primary me-2"></i>
+                  <span class="fw-bold">Capacidade:</span>
+                  <span class="ms-2" id="capacidadeSala">-</span> pessoas
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-currency-dollar text-success me-2"></i>
+                  <span class="fw-bold">Valor:</span>
+                  <span class="ms-2" id="precoSala">R$ 00,00</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-clock text-info me-2"></i>
+                  <span class="fw-bold">Disponibilidade:</span>
+                  <span class="ms-2 text-success">Disponível</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulário de Agendamento -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <h4 class="mb-4">Agendar Sala</h4>
+              <form class="needs-validation" novalidate>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="dataEntrada" class="form-label fw-bold">Data de Entrada</label>
+                    <input type="date" class="form-control form-control-lg" id="dataEntrada" required>
+                    <div class="invalid-feedback">
+                      Selecione uma data de entrada válida!
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="dataSaida" class="form-label fw-bold">Data de Saída</label>
+                    <input type="date" class="form-control form-control-lg" id="dataSaida" required>
+                    <div class="invalid-feedback">
+                      Selecione uma data de saída válida!
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="horaEntrada" class="form-label fw-bold">Horário de Entrada</label>
+                    <input type="time" class="form-control form-control-lg" id="horaEntrada" required>
+                    <div class="invalid-feedback">
+                      Selecione um horário de entrada!
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="horaSaida" class="form-label fw-bold">Horário de Saída</label>
+                    <input type="time" class="form-control form-control-lg" id="horaSaida" required>
+                    <div class="invalid-feedback">
+                      Selecione um horário de saída!
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <label for="observacoes" class="form-label fw-bold">Observações (Opcional)</label>
+                    <textarea class="form-control" id="observacoes" rows="3" placeholder="Digite observações sobre o agendamento..."></textarea>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button type="submit" class="my-4 btn agendamento btn-lg px-5">
+                      <i class="bi bi-calendar-check me-2"></i>Confirmar Agendamento
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 
   </section>
-  
-  <!-- <hr class="divisor text-center m-auto mt-5">
-
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h1 class="h2 text-center mt-5">Agendamento</h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12 my-3 ">
-        <form class="needs-validation" novalidate>
-          <div class="row border-dark shadow-lg py-3 ">
-            <div class="col-md-6">
-              <label for="name" class="contato-description form-label">Nome</label>
-              <input type="text" class="form-control form-control-lg" id="nome" required>
-              <div class="invalid-feedback">
-                Digite um nome válido!
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <label for="email" class="contato-description form-label">E-mail</label>
-              <input type="email" class="form-control form-control-lg" id="email" required>
-              <div class="invalid-feedback">
-                Digite um e-mail válido!
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <label for="telefone" class="contato-description form-label">Celular</label>
-              <input type="tel" class="form-control form-control-lg" id="telefone" required>
-              <div class="invalid-feedback">
-                Digite um telefone válido!
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="data" class="contato-description form-label">Data</label>
-              <input type="date" class="form-control form-control-lg" id="data" required>
-              <div class="invalid-feedback">
-                Digite uma data válida!
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="hora" class="contato-description form-label">Hora</label>
-              <input type="time" class="form-control form-control-lg" id="hora" required>
-              <div class="invalid-feedback">
-                Digite uma hora válida!
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="mensagem" class="contato-description form-label">Mensagem</label>
-              <textarea name="msg" id="msg" rows="4" class="form-control form-control-lg"
-                placeholder="Digite uma mensagem" required></textarea>
-              <div class="invalid-feedback">
-                Por favor, digite uma mensagem no campo!
-              </div>
-            </div>
-
-            <div class="col-6">
-              <button type="submit" class="contato enviar bt btn-primary btn-lg w-100 p-2 mt-4 fw-bold rounded">Enviar<i
-                  class="bi bi-arrow-right m-2 fw-bold"></i></button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </div> -->
 
   <footer class="mt-5 ">
     <div class="container-fluid footer d-flex justify-content-center align-items-center">
@@ -224,8 +293,8 @@
   </script>
 
   <script type="module" src="../js/main.js"></script>
-
-  <script src="../js/validacao.js"></script>
+  <script type="module" src="../js/agendamento.js"></script>
+  <script src="../js/dropdown.js"></script>
 
 </body>
 

@@ -32,8 +32,8 @@
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
   --bs-tooltip-bg: var(--color-primary);
   --bs-tooltip-color: var(--color-bg);
-  --color-red: #e75c3c;
-  --color-green: #2ecc71;
+  --red: #e75c3c;
+  --green: #2ecc71;
 }
 
 /* Background */
@@ -112,17 +112,17 @@ body,
   opacity: 35%;
 }
 
-.container-mensagens {
+#container-mensagens {
   position: fixed;
   right: 20px;
   top: 20px;
-  z-index: 9999;
+  z-index: 9999!important;
 }
 
 .toast {
   opacity: 1!important;
-  width: auto;
-  color: var(--color-white);
+  width: max-content;
+  color: var(--color-bg1);
   padding: 10px 25px;
   font-size: 16px;
   border-radius: 15px;
@@ -130,11 +130,11 @@ body,
 }
 
 .toast.red {
-  background-color: var(--color-red);
+  background-color: red!important;
 }
 
-.toast.green {
-  background-color: var(--color-green);
+.toast.green  {
+  background-color: var(--green);
 }
 
 /* Formatação do HEADER */
@@ -216,6 +216,7 @@ body,
   background: var(--color-gradient)!important;
   transform: scale(0.98);
 }
+
 
 /* Formatação da SEÇÃO 02 - Baner CTA */
 
@@ -980,8 +981,92 @@ h3 {
   color: white;
 }
 
+/* galeria de salas */
 .tipo_sala {
   cursor: pointer;
+  text-decoration: none; 
+}
+
+/* agendamento */
+.container-img {
+  position: relative;
+  z-index: -1;
+  overflow: hidden;
+  width: 98%;
+  height: 75vh;
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.25);
+  & img {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 24px;
+    position: relative;
+    opacity: 0.9;
+  }
+}
+
+.container-agendamento {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);;
+  width: 100%;
+  max-width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 20px;
+  z-index: 100;
+  box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.582);
+  backdrop-filter: blur(24px);
+  border-radius: 24px;
+  padding: 60px 2.5rem;
+  & .needs-validation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* FORMATAÇÃO DO AGENDAMENTO */
+
+.data-agendatemno {
+  color: var(--color-primary);
+  font-size: 1.75rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.agendamento {
+  background-image: linear-gradient(to right, #d94c30, #fc8971) !important;
+  border: var(--color-primary);
+  width: 'auto';
+  height: 60px;
+  border-radius: 12px 0;
+  color: var(--color-bg1);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
   text-decoration: none;
-  
+  letter-spacing: 1px;
+}
+
+.agendamento:hover {
+  background: var(--color-gradient)!important;
+  transform: scale(0.99);
+}
+
+
+input[type="date"] {
+  background-color: var(--color-bg2);
+  border: none;
+  color: var(--color-text);
+  padding: 10px 20px;
+  border-radius: 0 12px;
 }

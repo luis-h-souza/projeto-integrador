@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
   main.event.init();
 })
 
+const BASE = 'src/pages'
+
 let main = {};
 
 // eventos
@@ -18,22 +20,21 @@ main.method = {
 
   // centraliza as chamadas de GET - axios
   get: async (url, callbackSuccess, callbackError, login = false) => {
-    url = "http://localhost:8000/api/salas";
+    const baseUrl = "http://localhost:8000/api";
+    const fullUrl = `${baseUrl}${url}`;
+    
     try {
-      // verifica se o token é válido, se for váçido faz a chamad
-      if (main.method.validaToken(login)) {
-        const token = main.method.obterValorStorage("token");
-        const response = await axios.get(url, {
-          headers: { // cabeçalho da requisição
-            "Content-Type": "application/json;charset=utf-8",
-            "Authorization": token
-          }
-        });
-        callbackSuccess(response.data);
-      }
+      // Temporariamente desabilitado validação de token para teste
+      const response = await axios.get(fullUrl, {
+        headers: { // cabeçalho da requisição
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
+      callbackSuccess(response.data);
     } catch (error) {
+      console.error('Erro na requisição:', error);
       if (error.response && error.response.status === 401) {
-        main.method.logout();
+        // main.method.logout();
       }
       callbackError(error);
     }
@@ -58,7 +59,7 @@ main.method = {
       }
       callbackError(error);
     }
-    window.location.href = "../pages/login.html"
+    window.location.href = `/src/pages/login.html`
   },
 
   post: async (url, dados, callbackSuccess, callbackError, login = false) => {
@@ -70,7 +71,7 @@ main.method = {
           headers: {
             "cors": false,
             "Content-Type": "application/json;charset=utf-8",
-            "Authorization": ""//token
+            "Authorization": ""   //token
           }
         });
         callbackSuccess(response.data);
@@ -81,7 +82,7 @@ main.method = {
       }
       callbackError(error);
     }
-    window.location.href = "/galeria-salas.html"
+    window.location.href = `${BASE}/galeria-salas.html`
   },
 
   // centraliza as chamadas de upload
@@ -109,7 +110,8 @@ main.method = {
   validaToken: (login = false) => {
 
     // verifica se existe o token na sessão
-    let tokenAtual = main.method.obterValorStorage("token");
+    let tokenAtual = main.method.obterValorStorage('token');
+    console.log(tokenAtual)
 
     // validação se o token não existe
     if (
@@ -119,41 +121,10 @@ main.method = {
         tokenAtual == "null") &&
       !login
     ) {
-      window.location.href = "/login.html";
+      // window.location.href = "/src/pages/login.html";
       return false;
     }
     return true;
-  },
-
-  api_: async () => {
-    console.log('iniciou')
-
-    const formReserva = document.getElementById('form-reserva');
-    const btnReserva = document.getElementById('btn-reserva');
-    const reservas = document.getElementById('reservas');
-
-    const baseURL = 'http://localhost:8000/api';
-    const tabela = document.querySelector("#tabela-reservas");
-
-    try {
-      const response = await axios.get(`${baseURL}/login`);
-      let usuario = response.data;
-
-      console.log(usuario);
-
-      usuario.forEach(cliente => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <p>${cliente.id}</p>
-          <p>${cliente.nome}</p>
-          <p>${cliente.email}</p>
-          <p>${cliente.senha}</p>
-        `;
-        console.log(tr);
-      });
-    } catch (error) {
-      console.error('Erro ao buscar clientes:', error);
-    }
   },
 
   // grava valores no localstorage
@@ -164,7 +135,8 @@ main.method = {
   // obtem um valor do localstorage
   obterValorStorage: (chave) => {
     const valor = localStorage.getItem(chave)
-    return valor ? JSON.stringify(valor) : null;
+    
+    return valor ? valor : null;
   },
 
   // remove uma sessão
@@ -179,7 +151,7 @@ main.method = {
   },
 
   // método para criarum toast de resposta
-  mensagem: (texto, cor = "red", tempo = 3500) => {
+  mensagem: (texto, cor = "red", tempo = 4500) => {
     let container = document.querySelector("#container-mensagens");
 
     if (container.childElementCount > 2) {

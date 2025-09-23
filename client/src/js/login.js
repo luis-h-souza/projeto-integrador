@@ -10,12 +10,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 // chamada para logar
 document.getElementById('logar').addEventListener('click', (e) => {
   e.preventDefault();
-  const EmailLogin = document.getElementById('EmailLogin').value.trim();
-  const SenhaLogin = document.getElementById('SenhaLogin').value.trim();
 
-  login.method.login(EmailLogin, SenhaLogin);
+  login.method.validarLogin();
 });
-
 
 login.event = {
   init: () => {
@@ -33,12 +30,12 @@ login.method = {
 
     // valida se os campos estão preenchidos
     if (email.length == 0) {
-      main.method.mensagem("Informe o e-mail, por favor.");
+      main.method.mensagem("Informe seu e-mail, por favor.");
       document.querySelector("#EmailLogin").focus();
       return;
     }
     if (senha.length == 0) {
-      main.method.mensagem("Informe a senha, por favor.");
+      main.method.mensagem("Informe sua senha, por favor.");
       document.querySelector("#SenhaLogin").focus();
       return;
     }
@@ -68,17 +65,22 @@ login.method = {
         return response.json();
       })
       .then(data => {
+        console.log('Resposta da API:', data);
+        console.log('Nome da API:', JSON.stringify(data.nome));
+        console.log('Email da API:', JSON.stringify(data.email));
 
         main.method.gravarValorStorage('token', data.token);
-        main.method.gravarValorStorage('nome', data.usuario);
-        main.method.gravarValorStorage('email', EmailLogin);
+        main.method.gravarValorStorage('nome', data.nome);
+        main.method.gravarValorStorage('email', data.email);
 
-        return data, window.location.href = '../pages/galeria-salas.html';
+        console.log('Token salvo:', data.token);
+
+        return data, window.location.href = '/src/pages/galeria-salas.html';
 
       })
       .catch(error => {
         console.error('Error:', error);
-        main.method.mensagem("Login failed. Please check your credentials.");
+        main.method.mensagem("Falha no login, tente novamente.");
       });
 
       return formData;

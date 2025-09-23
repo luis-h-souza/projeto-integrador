@@ -1,64 +1,266 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# LocalCo - Backend API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é o backend da aplicação LocalCo, uma API REST desenvolvida com Laravel para gerenciar o sistema de coworking.
 
-## About Laravel
+## 🚀 Tecnologias Utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 8** - Framework PHP
+- **PHP 8.2+** - Linguagem de programação
+- **MySQL** - Banco de dados
+- **Laravel Sanctum** - Autenticação API
+- **Eloquent ORM** - Mapeamento objeto-relacional
+- **Composer** - Gerenciador de dependências PHP
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📁 Estrutura do Projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+api_localco/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/     # Controladores da API
+│   │   │   ├── SalaController.php
+│   │   │   └── UsuarioController.php
+│   │   └── Middleware/      # Middlewares
+│   └── Models/              # Modelos Eloquent
+│       ├── Salas.php
+│       ├── Usuario.php
+│       └── ...
+├── database/
+│   ├── migrations/          # Migrações do banco
+│   └── seeders/            # Seeders para dados de teste
+│       ├── SalasSeeder.php
+│       └── UsuarioSeeder.php
+├── routes/
+│   └── api.php             # Rotas da API
+├── config/                 # Configurações
+├── .env                    # Variáveis de ambiente
+└── composer.json
+```
 
-## Learning Laravel
+## 🛠️ Instalação e Configuração
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Pré-requisitos
+- PHP 8.2 ou superior
+- Composer
+- MySQL 5.7 ou superior
+- Extensões PHP: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Instalação
 
-## Laravel Sponsors
+1. **Instalar dependências**:
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Configurar ambiente**:
+```bash
+# Copiar arquivo de configuração
+cp .env.example .env
 
-### Premium Partners
+# Gerar chave da aplicação
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+3. **Configurar banco de dados**:
+Edite o arquivo `.env` com suas credenciais:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=localco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+```
 
-## Contributing
+4. **Executar migrações**:
+```bash
+php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Popular banco com dados de teste**:
+```bash
+php artisan db:seed --class=SalasSeeder
+php artisan db:seed --class=UsuarioSeeder
+```
 
-## Code of Conduct
+### Execução
+```bash
+# Iniciar servidor de desenvolvimento
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+A API estará disponível em `http://localhost:8000`
 
-## Security Vulnerabilities
+## 📊 Estrutura do Banco de Dados
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Tabela `salas`
+- `id_sala_pk` (PK) - ID único da sala
+- `tipo_sala` - Tipo da sala (ex: "Sala Compartilhada")
+- `descricao_sala` - Descrição detalhada
+- `capac_pessoas` - Capacidade máxima
+- `preco_base` - Preço base por período
+- `foto` - URL da foto da sala
 
-## License
+### Tabela `usuario`
+- `id` (PK) - ID único do usuário
+- `nome` - Nome completo
+- `email` - Email único
+- `senha` - Senha criptografada
+- `created_at` - Data de criação
+- `updated_at` - Data de atualização
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🔌 Endpoints da API
+
+### Autenticação
+```
+POST /api/register
+POST /api/login
+POST /api/logout
+```
+
+### Salas
+```
+GET /api/salas          # Listar todas as salas
+GET /api/salas/{id}     # Detalhes de uma sala específica
+POST /api/salas         # Criar nova sala (protegido)
+PUT /api/salas/{id}     # Atualizar sala (protegido)
+DELETE /api/salas/{id}  # Deletar sala (protegido)
+```
+
+### Exemplos de Requisições
+
+#### Login
+```bash
+curl -X POST http://localhost:8000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"joao@teste.com","senha":"123456"}'
+```
+
+#### Listar Salas
+```bash
+curl -X GET http://localhost:8000/api/salas
+```
+
+#### Detalhes da Sala
+```bash
+curl -X GET http://localhost:8000/api/salas/1
+```
+
+## 🔐 Autenticação
+
+A API utiliza Laravel Sanctum para autenticação via tokens:
+
+1. **Login**: Retorna token de acesso
+2. **Requisições autenticadas**: Incluir header `Authorization: Bearer {token}`
+3. **Logout**: Invalida o token
+
+### Exemplo de Uso
+```javascript
+// Login
+const response = await fetch('/api/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'user@example.com', senha: 'password' })
+});
+
+const data = await response.json();
+const token = data.token;
+
+// Requisição autenticada
+const salas = await fetch('/api/salas', {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
+```
+
+## 🗃️ Seeders
+
+### SalasSeeder
+Popula a tabela `salas` com 4 salas de exemplo:
+- Sala Compartilhada
+- Sala Privada
+- Sala de Reunião
+- Sala de Eventos
+
+### UsuarioSeeder
+Cria usuários de teste:
+- joao@teste.com / 123456
+- maria@teste.com / 123456
+
+## 🧪 Testes
+
+```bash
+# Executar testes
+php artisan test
+
+# Executar testes específicos
+php artisan test --filter=SalaControllerTest
+```
+
+## 📝 Logs
+
+Os logs da aplicação são salvos em:
+- `storage/logs/laravel.log`
+
+Para monitorar logs em tempo real:
+```bash
+tail -f storage/logs/laravel.log
+```
+
+## 🔧 Configurações Importantes
+
+### CORS
+Configurado em `config/cors.php` para permitir requisições do frontend.
+
+### Sanctum
+Configurado em `config/sanctum.php` para autenticação de API.
+
+### Database
+Configurações em `config/database.php`.
+
+## 🚀 Deploy
+
+### Produção
+1. Configurar variáveis de ambiente
+2. Executar migrações: `php artisan migrate --force`
+3. Limpar cache: `php artisan config:cache`
+4. Otimizar: `php artisan optimize`
+
+### Docker (Opcional)
+```bash
+# Usando Laravel Sail
+./vendor/bin/sail up -d
+```
+
+## 📊 Monitoramento
+
+### Health Check
+```bash
+curl http://localhost:8000/api/health
+```
+
+### Métricas
+- Logs de requisições
+- Performance de queries
+- Uso de memória
+
+## 🛡️ Segurança
+
+- Validação de dados de entrada
+- Sanitização de inputs
+- Rate limiting (configurável)
+- CORS configurado
+- Tokens de autenticação seguros
+
+## 📞 Suporte
+
+Para dúvidas ou problemas:
+1. Verificar logs em `storage/logs/`
+2. Consultar documentação do Laravel
+3. Entrar em contato com a equipe de desenvolvimento
+
+## 🔄 Versionamento
+
+- **v1.0.0** - Versão inicial com funcionalidades básicas
+- Autenticação de usuários
+- CRUD de salas
+- API REST completa
