@@ -29,6 +29,9 @@ Route::middleware('auth:api')->group(function (){
 });
 
 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// http://localhost:8080/laravel/api/salas

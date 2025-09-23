@@ -10,8 +10,7 @@ use App\Models\Usuario;
 
 class UsuarioController extends Controller
 {
-    public function register(Request $request)
-    {
+    public function register(Request $request){
 
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -27,8 +26,7 @@ class UsuarioController extends Controller
         return response()->json(['message' => 'Usuário registrado com sucesso!'], 201);
     }
 
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         $request->validate([
             'email' => 'required|string|email',
             'senha' => 'required|string'
@@ -36,7 +34,7 @@ class UsuarioController extends Controller
 
         $usuario = Usuario::where('email', $request->email)->first();
 
-        if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
+        if(!$usuario || !Hash::check($request->senha,$usuario->senha)){
             return response()->json(['message' => 'Usuario Inválido'], 401);
         }
 
@@ -47,12 +45,14 @@ class UsuarioController extends Controller
         return response()->json(['token' => $token, 'email' => $usuario->email, 'nome' => $usuario->nome], 200);
     }
 
-    public function logout(Request $request)
-    {
-        $usuario = Auth::guard('api')->user();
-        if ($usuario) {
-            $usuario->token = null;
-            $usuario->save();
+    public function logout(Request $request){
+        $token = $request->bearerToken();
+        if ($token) {
+            $usuario = Usuario::where('api_token', $token)->first();
+            if ($usuario) {
+                $usuario->api_token = null;
+                $usuario->save();
+            }
         }
 
         return response()->json(['message' => 'Logout realizado com sucesso']);
