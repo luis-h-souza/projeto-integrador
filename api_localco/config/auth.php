@@ -36,6 +36,11 @@ return [
     */
 
     'guards' => [
+        /*
+         * API pública LocalCo: Bearer token na coluna usuario.api_token (não Sanctum).
+         * O pacote laravel/sanctum permanece instalado para evolução futura, mas as rotas
+         * em routes/api.php não usam auth:sanctum.
+         */
         'api' => [
             'driver' => 'token',
             'provider' => 'users',

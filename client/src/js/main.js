@@ -1,10 +1,9 @@
 import axios from 'axios';
+import { API_BASE_URL } from "./apiConfig.js";
 
 document.addEventListener("DOMContentLoaded", function (event) {
   main.event.init();
 })
-
-const BASE = 'src/pages'
 
 let main = {};
 
@@ -20,9 +19,8 @@ main.method = {
 
   // centraliza as chamadas de GET - axios
   get: async (url, callbackSuccess, callbackError, login = false) => {
-    const baseUrl = "http://localhost:8000/api";
-    const fullUrl = `${baseUrl}${url}`;
-    
+    const fullUrl = `${API_BASE_URL}${url}`;
+
     try {
       // Temporariamente desabilitado validação de token para teste
       const response = await axios.get(fullUrl, {
@@ -39,62 +37,38 @@ main.method = {
       callbackError(error);
     }
   },
-  
-  // centraliza as chamadas de POST
+
+  // centraliza as chamadas de POST para criação de usuário
   post_criar: async (url, dados, callbackSuccess, callbackError) => {
-    url = "http://localhost:8000/api/register";
+    const fullUrl = `${API_BASE_URL}${url}`;
+    const payload =
+      typeof dados === "string" ? JSON.parse(dados) : dados;
+
     try {
-        const response = await axios.post(url, dados, {
-          headers: {
-            "cors": false,
-            "Content-Type": "application/json;charset=utf-8",
-            "Authorization": ""//token
-          }
-        });
-        callbackSuccess(response.data);
-      
+      const response = await axios.post(fullUrl, payload, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        }
+      });
+      callbackSuccess(response.data);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         main.method.logout();
       }
       callbackError(error);
     }
-    window.location.href = `/src/pages/login.html`
-  },
-
-  post: async (url, dados, callbackSuccess, callbackError, login = false) => {
-    url = "http://localhost:8000/api/login";
-    try {
-      // if (main.method.validaToken(login)) {
-      //   const token = main.method.obterValorStorage("token");
-        const response = await axios.post(url, dados, {
-          headers: {
-            "cors": false,
-            "Content-Type": "application/json;charset=utf-8",
-            "Authorization": ""   //token
-          }
-        });
-        callbackSuccess(response.data);
-      
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        app.method.logout();
-      }
-      callbackError(error);
-    }
-    window.location.href = `${BASE}/galeria-salas.html`
   },
 
   // centraliza as chamadas de upload
   upload: async (url, dados, callbackSuccess, callbackError, login = false) => {
-    url = "http://localhost:8000/api";
+    const targetUrl = `${API_BASE_URL}${url}`;
     try {
       if (main.method.validaToken(login)) {
         const token = main.method.obterValorStorage("token");
-        const response = await axios.post(url, dados, {
+        const response = await axios.post(targetUrl, dados, {
           headers: {
             "Mime-Type": "multipart/form-data",
-            "Authorization": token
+            "Authorization": `Bearer ${token}`
           }
         });
         callbackSuccess(response.data);
@@ -135,7 +109,7 @@ main.method = {
   // obtem um valor do localstorage
   obterValorStorage: (chave) => {
     const valor = localStorage.getItem(chave)
-    
+
     return valor ? valor : null;
   },
 
@@ -144,8 +118,20 @@ main.method = {
     localStorage.removeItem(local);
   },
 
-  // método que limpa todo o localstorage e redireciona pro login
-  logout: () => {
+  logout: async () => {
+    const token = main.method.obterValorStorage("token");
+    if (token) {
+      try {
+        await fetch(`${API_BASE_URL}/logout`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch (_) {}
+    }
     localStorage.clear();
     window.location.href = "../index.html";
   },

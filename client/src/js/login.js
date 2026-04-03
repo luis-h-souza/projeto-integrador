@@ -1,5 +1,5 @@
-import axios, { AxiosHeaders } from "axios";
 import main from "./main";
+import { API_BASE_URL } from "./apiConfig.js";
 
 let login = {};
 
@@ -51,7 +51,7 @@ login.method = {
     formData.append('email', EmailLogin);
     formData.append('senha', SenhaLogin);
 
-    fetch('http://localhost:8000/api/login', {
+    fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: {
         'Accept': 'application/json',

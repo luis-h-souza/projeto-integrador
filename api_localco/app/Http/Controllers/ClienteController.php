@@ -4,37 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
-use PHPUnit\Framework\MockObject\Stub\ReturnStub;
 
 class ClienteController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return Cliente::with("psfisica", "juridico", "usuario")->get();
     }
 
-    public function show($id_cliente_pk){
-        $cliente = Cliente::with("psfisica","juridico", "usuario")->find($id_cliente_pk);
-        if(!$cliente){
+    public function show($id_cliente_pk)
+    {
+        $cliente = Cliente::with("psfisica", "juridico", "usuario")->find($id_cliente_pk);
+        if (!$cliente) {
             return response()->json(["error" => "Cliente não encontrado"], 404);
         }
         return $cliente;
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->validate([
-            
+
             "id_usuario_fk" => "required|integer",
-             "telefone" => "required|max:20",
-             "celular" => "required|max:20",
-             "rua" => "required|max:250",
-             "bairro" => "required|max:250",
-             "numero" => "required|max:10",
-             "complemento" => "required|max:50",
-             "cidade" => "required|max:100",
-             "estado" => "required|max:50",
-             "pais" => "required|max:50",
-             "id_fisico_fk" => "required|integer",
-             "id_juridico_fk" => "required|integer",
+            "telefone" => "nullable|max:20",
+            "celular" => "nullable|max:20",
+            "rua" => "nullable|max:250",
+            "bairro" => "nullable|max:250",
+            "numero" => "nullable|max:10",
+            "complemento" => "nullable|max:50",
+            "cidade" => "nullable|max:100",
+            "estado" => "nullable|max:50",
+            "pais" => "nullable|max:50",
+            "id_fisico_fk" => "nullable|integer",
+            "id_juridico_fk" => "nullable|integer",
 
         ]);
 
@@ -42,37 +44,39 @@ class ClienteController extends Controller
         return response()->json($cliente, 201);
     }
 
-    public function update(Request $request, $id_cliente_pk){
+    public function update(Request $request, $id_cliente_pk)
+    {
         $cliente = Cliente::find($id_cliente_pk);
-    if(!$cliente){
-        return response()->json(["error"=> "Cliente não encontrado"],404);
-    }
+        if (!$cliente) {
+            return response()->json(["error" => "Cliente não encontrado"], 404);
+        }
 
-    $data = $request->validate([
+        $data = $request->validate([
             "id_usuario_fk" => "required|integer",
-             "telefone" => "required|max:20",
-             "celular" => "required|max:20",
-             "rua" => "required|max:250",
-             "bairro" => "required|max:250",
-             "numero" => "required|max:10",
-             "complemento" => "required|max:50",
-             "cidade" => "required|max:100",
-             "estado" => "required|max:50",
-             "pais" => "required|max:50",
-             "id_fisico_fk" => "required|integer",
-             "id_juridico_fk" => "required|integer",
+            "telefone" => "nullable|max:20",
+            "celular" => "nullable|max:20",
+            "rua" => "nullable|max:250",
+            "bairro" => "nullable|max:250",
+            "numero" => "nullable|max:10",
+            "complemento" => "nullable|max:50",
+            "cidade" => "nullable|max:100",
+            "estado" => "nullable|max:50",
+            "pais" => "nullable|max:50",
+            "id_fisico_fk" => "nullable|integer",
+            "id_juridico_fk" => "nullable|integer",
 
-    ]);
+        ]);
 
-    $cliente->update($data);
-    return response()->json(null,204);
+        $cliente->update($data);
+        return response()->json(null, 204);
 
     }
 
-    public function destroy($id_cliente_pk){
-        $cliente = Cliente::find($id_cliente_pk); 
-        if(!$cliente){
-            return response()->json(["error"=> "Cliente não encontrado"],404);
+    public function destroy($id_cliente_pk)
+    {
+        $cliente = Cliente::find($id_cliente_pk);
+        if (!$cliente) {
+            return response()->json(["error" => "Cliente não encontrado"], 404);
         }
 
         $cliente->delete();

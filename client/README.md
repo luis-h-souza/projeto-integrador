@@ -59,6 +59,12 @@ client/
 npm install
 ```
 
+Copie `.env.example` para `.env` e defina a URL da API Laravel (inclui o sufixo `/api`):
+
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
 ### Execução
 ```bash
 # Iniciar servidor de desenvolvimento

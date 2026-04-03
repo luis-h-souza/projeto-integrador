@@ -14,7 +14,7 @@ class Cliente extends Model
 
     public $incrementing = true;
 
-   protected $fillable = ["id_usuario_fk","telefone","celular","rua","bairro","numero", "complemento", "cidade", "estado", "pais", "id_fisico_fk", "id_juridico_fk"];
+   protected $fillable = ["id_usuario_fk","email","nome","telefone","celular","rua","bairro","numero", "complemento", "cidade", "estado", "pais", "id_fisico_fk", "id_juridico_fk"];
 
    public $timestamps = false;
 

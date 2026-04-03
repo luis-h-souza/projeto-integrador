@@ -14,7 +14,7 @@ class Usuario extends Model implements AuthenticatableContract
    protected $primaryKey= 'id';
    public $timestamps = false;
 
-   protected $fillable = ['nome', 'email', 'senha'];
+   protected $fillable = ['nome', 'email', 'senha', 'api_token'];
 
    protected $hidden = ['senha'];
 

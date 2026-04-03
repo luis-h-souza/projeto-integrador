@@ -25,6 +25,7 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Mail\\AgendamentoConfirmado' => $baseDir . '/app/Mail/AgendamentoConfirmado.php',
     'App\\Models\\Cliente' => $baseDir . '/app/Models/Cliente.php',
     'App\\Models\\Pedido' => $baseDir . '/app/Models/Pedido.php',
     'App\\Models\\PsFisica' => $baseDir . '/app/Models/PsFisica.php',
