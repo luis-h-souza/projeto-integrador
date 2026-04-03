@@ -89,7 +89,8 @@ class PedidoController extends Controller
              "id_sala_fk" => "required|integer|exists:salas,id_sala_pk",
              "forma_pg" => "required|string|max:100",
              "data_entrada" => "required|date",
-             "data_saida" => "required|date|after:data_entrada"
+             "data_saida" => "required|date|after:data_entrada",
+             "observacoes" => "nullable|string|max:500"
         ]);
 
         // Obtém o cliente a partir do token
@@ -139,8 +140,9 @@ class PedidoController extends Controller
                     new AgendamentoConfirmado($pedidoCompleto, $precoTotal, $diasReservados)
                 );
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Log do erro, mas não impede a criação do agendamento
+            // Usamos \Throwable para capturar erros fatais de dependências como EmailValidator
             Log::error('Erro ao enviar email de confirmação: ' . $e->getMessage());
         }
 

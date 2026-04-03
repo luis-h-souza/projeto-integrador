@@ -15,7 +15,7 @@ class Pedido extends Model
 
     public $incrementing = true;
 
-    protected $fillable = ["id_sala_fk", "id_cliente_fk", "forma_pg", "data_entrada", "data_saida"];
+    protected $fillable = ["id_sala_fk", "id_cliente_fk", "forma_pg", "data_entrada", "data_saida", "observacoes"];
 
     public $timestamps = false;
 
