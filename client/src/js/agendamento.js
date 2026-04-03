@@ -61,7 +61,7 @@ agendamento.method = {
     // Exibe os dados da sala na página
     exibirDadosSala: (dadosSala) => {
         // Atualiza a imagem da sala
-        const imgSala = document.querySelector('.container-img img');
+        const imgSala = document.getElementById('fotoSala');
         if (imgSala && dadosSala.foto) {
             imgSala.src = dadosSala.foto;
             imgSala.alt = dadosSala.tipo_sala;
@@ -69,8 +69,12 @@ agendamento.method = {
 
         // Atualiza o título da sala
         const tituloSala = document.getElementById('tituloSala');
+        const breadcrumbSala = document.getElementById('breadcrumbSala');
         if (tituloSala) {
             tituloSala.textContent = dadosSala.tipo_sala;
+        }
+        if (breadcrumbSala) {
+            breadcrumbSala.textContent = dadosSala.tipo_sala;
         }
 
         // Atualiza a descrição da sala
@@ -88,7 +92,7 @@ agendamento.method = {
         // Atualiza o preço da sala
         const precoSala = document.getElementById('precoSala');
         if (precoSala) {
-            precoSala.textContent = `R$ ${dadosSala.preco_base}`;
+            precoSala.textContent = `R$ ${parseFloat(dadosSala.preco_base).toFixed(2).replace('.', ',')}`;
         }
 
         // Salva os dados da sala para uso posterior
@@ -103,6 +107,8 @@ agendamento.method = {
     // Função do dropdown (reutilizada da galeria)
     dropdowm: () => {
         const profileInfo = document.getElementById('profileInfo');
+        if (!profileInfo) return;
+
         const storageEmail = main.method.obterValorStorage('email');
         const storageNome = main.method.obterValorStorage('nome');
 
@@ -242,12 +248,13 @@ agendamento.method = {
         const saida = new Date(dataSaida);
 
         if (saida <= entrada) {
-            agendamento.method.atualizarResumo('-', '-', '-', 'R$ 0,00');
+            agendamento.method.atualizarResumo('-', '0 dias', '-', 'R$ 0,00');
             return;
         }
 
         // Calcula dias
-        const dias = Math.ceil((saida - entrada) / (1000 * 60 * 60 * 24)) || 1;
+        const diffTime = Math.abs(saida - entrada);
+        const dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
 
         // Calcula preço total
         const precoBase = parseFloat(dadosSala.preco_base);
@@ -260,7 +267,7 @@ agendamento.method = {
         // Atualiza o resumo
         agendamento.method.atualizarResumo(
             `${dataEntradaFormatada} a ${dataSaidaFormatada}`,
-            `${dias} ${dias === 1 ? 'dia' : 'dias'}`,
+            `${dias} ${dias === 1 ? 'noite' : 'noites'}`,
             `R$ ${precoBase.toFixed(2).replace('.', ',')}`,
             `R$ ${precoTotal.toFixed(2).replace('.', ',')}`
         );
@@ -268,10 +275,17 @@ agendamento.method = {
 
     // Atualiza o resumo do agendamento
     atualizarResumo: (periodo, dias, precoDia, total) => {
-        document.getElementById('resumoPeriodo').textContent = periodo;
-        document.getElementById('resumoDias').textContent = dias;
-        document.getElementById('resumoPrecoDia').textContent = precoDia;
-        document.getElementById('resumoTotal').textContent = total;
+        const resPeriodo = document.getElementById('resumoPeriodo');
+        const resDias = document.getElementById('resumoDias');
+        const resPrecoDia = document.getElementById('resumoPrecoDia');
+        const resSubtotal = document.getElementById('subtotalValue');
+        const resTotal = document.getElementById('resumoTotal');
+
+        if (resPeriodo) resPeriodo.textContent = periodo;
+        if (resDias) resDias.textContent = dias;
+        if (resPrecoDia) resPrecoDia.textContent = precoDia;
+        if (resSubtotal) resSubtotal.textContent = total;
+        if (resTotal) resTotal.textContent = total;
     },
 
     // Carrega o calendário de disponibilidade

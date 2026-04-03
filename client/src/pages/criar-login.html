@@ -36,21 +36,104 @@
 
         <section class="row">
 
-          <form class="my-form" method="post">
-            <div class="text-field">
-              <label for="nome">Nome:</label>
-              <input class="col-6" type="text" id="criarNome" name="nome" placeholder="Seu nome" required />
-              <img alt="Usuário Icon" title="Nome Icon" src="../assets/icon/email.svg" />
+          <form class="my-form" id="formCadastro" method="post">
+            <div class="row mb-3">
+              <div class="col-12 text-field">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="criarNome" name="nome" placeholder="Seu nome completo" required />
+                <img alt="Usuário Icon" src="../assets/icon/email.svg" />
+              </div>
             </div>
-            <div class="text-field">
-              <label for="email">E-mail:</label>
-              <input class="col-6" type="email" id="criarEmail" name="email" placeholder="Seu e-mail" required />
-              <img alt="Email Icon" title="Email Icon" src="../assets/icon/email.svg" />
+
+            <div class="row mb-3">
+              <div class="col-md-6 text-field">
+                <label for="email">E-mail:</label>
+                <input type="email" id="criarEmail" name="email" placeholder="Seu e-mail" required />
+                <img alt="Email Icon" src="../assets/icon/email.svg" />
+              </div>
+              <div class="col-md-6 text-field">
+                <label for="password">Senha:</label>
+                <input id="criarSenha" type="password" name="password" placeholder="Sua senha" required />
+                <img alt="Password Icon" src="../assets/icon/password.svg" />
+              </div>
             </div>
-            <div class="text-field">
-              <label for="password">Senha:</label>
-              <input id="criarSenha" type="password" name="password" placeholder="Sua senha" required />
-              <img alt="Password Icon" title="Password Icon" src="../assets/icon/password.svg" />
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label d-block fw-bold mb-2">Tipo de Pessoa:</label>
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="radio" type="radio" name="tipo_pessoa" id="ps_fisica" value="fisica" checked>
+                                <label class="form-check-label ms-2" for="ps_fisica">Pessoa Física</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="radio" type="radio" name="tipo_pessoa" id="ps_juridica" value="juridica">
+                                <label class="form-check-label ms-2" for="ps_juridica">Pessoa Jurídica</label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12 text-field" id="containerCPF">
+                <label for="criarCPF">CPF:</label>
+                <input type="text" id="criarCPF" name="cpf" placeholder="000.000.000-00" />
+              </div>
+              <div class="col-12 text-field d-none" id="containerCNPJ">
+                <label for="criarCNPJ">CNPJ:</label>
+                <input type="text" id="criarCNPJ" name="cnpj" placeholder="00.000.000/0000-00" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6 text-field">
+                <label for="criarTelefone">Telefone:</label>
+                <input type="text" id="criarTelefone" name="telefone" placeholder="(00) 0000-0000" />
+              </div>
+              <div class="col-md-6 text-field">
+                <label for="criarCelular">Celular:</label>
+                <input type="text" id="criarCelular" name="celular" placeholder="(00) 00000-0000" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-8 text-field">
+                  <label for="criarRua">Rua:</label>
+                  <input type="text" id="criarRua" name="rua" placeholder="Nome da rua" />
+                </div>
+                <div class="col-md-4 text-field">
+                  <label for="criarNumero">Número:</label>
+                  <input type="text" id="criarNumero" name="numero" placeholder="Nº" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6 text-field">
+                  <label for="criarBairro">Bairro:</label>
+                  <input type="text" id="criarBairro" name="bairro" placeholder="Seu bairro" />
+                </div>
+                <div class="col-md-6 text-field">
+                  <label for="criarComplemento">Complemento:</label>
+                  <input type="text" id="criarComplemento" name="complemento" placeholder="Apt / Bloco" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-5 text-field">
+                  <label for="criarCidade">Cidade:</label>
+                  <input type="text" id="criarCidade" name="cidade" placeholder="Cidade" />
+                </div>
+                <div class="col-md-3 text-field">
+                  <label for="criarEstado">Estado:</label>
+                  <input type="text" id="criarEstado" name="estado" placeholder="UF" />
+                </div>
+                <div class="col-md-4 text-field">
+                  <label for="criarPais">País:</label>
+                  <input type="text" id="criarPais" name="pais" value="Brasil" placeholder="País" />
+                </div>
             </div>
 
             <input type="button" class="my-form__button" value="Cadastrar" id="cadastrarLogin" />

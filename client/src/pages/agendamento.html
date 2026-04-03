@@ -23,32 +23,105 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/dropdown.css">
     <style>
+        :root {
+            --primary-orange: #fc6648;
+            --primary-orange-hover: #e1553a;
+            --bg-light: #f8f9fa;
+            --text-dark: #333;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            font-size: 1.2rem;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .color-agendamento {
+            color: var(--primary-orange) !important;
+        }
+
+        .agendamento {
+            background: linear-gradient(135deg, var(--primary-orange), #ff8a71) !important;
+            border: none;
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .agendamento:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(252, 102, 72, 0.3);
+            filter: brightness(1.1);
+        }
+
+        /* Hero Image Container */
+        .container-img {
+            height: 450px;
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+
+        .container-img img {
+            transition: transform 0.5s ease;
+        }
+
+        .container-img:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Booking Card */
+        .sticky-top {
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 0.25rem rgba(252, 102, 72, 0.15);
+        }
+
+        .resumo-valores span {
+            font-size: 0.95rem;
+        }
+
+        /* Amenities */
+        .bi-check-circle-fill {
+            color: var(--green);
+        }
+
+        /* Calendar */
+        .calendario-grid {
+            display: block;
+        }
+
         .calendario-container {
             max-width: 100%;
-            margin: 0 auto;
         }
 
         .calendario-header {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-bottom: 8px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .calendario-dia-header {
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
             padding: 8px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            font-size: 0.85rem;
+            background-color: #eee;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #666;
         }
 
         .calendario-semana {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-bottom: 4px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .calendario-dia {
@@ -56,53 +129,54 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1.5px solid transparent;
-            min-height: 40px;
-            max-height: 50px;
+            min-height: 45px;
+            position: relative;
         }
 
         .calendario-dia.disponivel {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
+            background-color: #f0fff4;
+            border-color: #c6f6d5;
+            color: #2f855a;
         }
 
         .calendario-dia.indisponivel {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            opacity: 0.7;
+            background-color: #fff5f5;
+            border-color: #fed7d7;
+            color: #c53030;
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .calendario-dia.hoje {
-            border-color: #007bff;
-            border-width: 2px;
-            font-weight: bold;
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+            z-index: 1;
         }
 
         .calendario-dia-numero {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .calendario-dia:hover:not(.indisponivel) {
-            transform: scale(1.08);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            background-color: white;
+            border-color: var(--primary-orange);
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 2;
         }
 
-        @media screen and (max-width: 768px) {
-            .calendario-dia-header {
-                padding: 6px;
-                font-size: 0.75rem;
-            }
+        .decoration-dotted {
+            text-decoration: underline dotted;
+        }
 
-            .calendario-dia {
-                min-height: 35px;
-                max-height: 40px;
-            }
-
-            .calendario-dia-numero {
-                font-size: 0.7rem;
+        @media (max-width: 991px) {
+            .container-img {
+                height: 300px;
             }
         }
     </style>
@@ -230,219 +304,225 @@
     <!-- Container para mensagens toast -->
     <div id="container-mensagens" class="container-mensagens"></div>
 
-    <section>
-        <div class="container-fluid p-0">
-            <div class="container-fluid">
-                <div class="row m-0">
-
-                    <div class="col-12 mt-2 container-img p-0">
-                        <img class="img-fluid rounded-4" src="../assets/img/compartilhada.jpg" alt="imagem da sala" />
-
-                        <div class="container-agendamento img-fluid rounded-4" id="dataAgendamento">
-                            <div class="container text-center mt-4">
-                                <form class="needs-validation p-3" novalidate id="formAgendamento">
-                                    <!-- Datas -->
-                                    <div class="row mb-3">
-                                        <div class="col-md-6 mb-2 mb-md-0">
-                                            <label for="dataEntradaImagem"
-                                                class="form-label data-agendatemno color-agendamento fw-bold">Data de
-                                                entrada</label>
-                                            <input type="date" class="form-control form-control-lg"
-                                                id="dataEntradaImagem" required />
-                                            <div class="invalid-feedback">Digite uma data válida!</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="dataSaidaImagem"
-                                                class="form-label data-agendatemno color-agendamento fw-bold">Data de
-                                                saída</label>
-                                            <input type="date" class="form-control form-control-lg" id="dataSaidaImagem"
-                                                required>
-                                            <div class="invalid-feedback">Digite uma data válida!</div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Horários -->
-                                    <div class="row mb-3">
-                                        <div class="col-md-6 mb-2 mb-md-0">
-                                            <label for="horaEntrada"
-                                                class="form-label data-agendatemno color-agendamento fw-bold">Horário de
-                                                Entrada</label>
-                                            <input type="time" class="form-control form-control-lg" id="horaEntrada"
-                                                required>
-                                            <div class="invalid-feedback">Selecione um horário!</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="horaSaida"
-                                                class="form-label data-agendatemno color-agendamento fw-bold">Horário de
-                                                Saída</label>
-                                            <input type="time" class="form-control form-control-lg" id="horaSaida"
-                                                required>
-                                            <div class="invalid-feedback">Selecione um horário!</div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Pagamento e Observações -->
-                                    <div class="row mb-3">
-                                        <div class="col-md-6 mb-3 mb-md-0 text-start">
-                                            <label for="formaPg"
-                                                class="form-label data-agendatemno color-agendamento fw-bold">Forma de
-                                                Pagamento</label>
-                                            <select class="form-control form-control-lg" id="formaPg" required>
-                                                <option value="">Selecione...</option>
-                                                <option value="Cartão de Crédito">Cartão de Crédito</option>
-                                                <option value="Cartão de Débito">Cartão de Débito</option>
-                                                <option value="PIX">PIX</option>
-                                                <option value="Boleto">Boleto</option>
-                                                <option value="Dinheiro">Dinheiro</option>
-                                            </select>
-                                            <div class="invalid-feedback">Selecione uma forma de pagamento!</div>
-                                        </div>
-
-                                        <div class="col-md-6 text-start">
-                                            <label for="observacoes"
-                                                class="form-label data-agendatemno color-agendamento fw-bold">Observações
-                                                (Opcional)</label>
-                                            <textarea class="form-control form-control-lg" id="observacoes" rows="1"
-                                                placeholder="Digite observações..."></textarea>
-                                        </div>
-                                    </div>
-
-                                    <!-- Botão -->
-                                    <div class="text-center mt-4">
-                                        <button type="submit" class="btn agendamento btn-lg px-5 w-100">
-                                            <i class="bi bi-calendar-check me-2"></i>Confirmar Agendamento
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+    <main class="container py-4">
+        <!-- Room Header -->
+        <div class="row mb-4" data-aos="fade-down">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none color-agendamento">Home</a></li>
+                        <li class="breadcrumb-item"><a href="galeria-salas.html" class="text-decoration-none color-agendamento">Salas</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" id="breadcrumbSala">Agendamento</li>
+                    </ol>
+                </nav>
+                <h1 class="h2 text-start mt-0 mb-2" id="tituloSala">Título da sala</h1>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-star-fill text-warning me-1"></i>
+                        <span class="fw-bold">4.9</span>
+                        <span class="text-muted ms-1">(24 avaliações)</span>
                     </div>
-
-                </div>
-
-                <!-- Resumo do Agendamento -->
-                <div class="col-10 mt-4 m-auto">
-                    <div class="row">
-                        <div class="col-12">
-                            <h5 class="mb-3 fw-bold">Resumo do Agendamento</h5>
-                            <div class="card bg-light p-4 shadow-sm border-0">
-                                <div class="row">
-                                    <div class="col-md-3 mb-3 mb-md-0">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-bold text-muted small">Período:</span>
-                                            <span id="resumoPeriodo" class="fw-bold text-dark">-</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mb-3 mb-md-0">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-bold text-muted small">Dias:</span>
-                                            <span id="resumoDias" class="fw-bold text-dark">-</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mb-3 mb-md-0">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-bold text-muted small">Preço por dia:</span>
-                                            <span id="resumoPrecoDia" class="fw-bold text-dark">-</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-bold text-dark">Total:</span>
-                                            <span class="fw-bold fs-4 text-success" id="resumoTotal">R$ 0,00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 mt-4 m-auto">
-                    <!-- Informações da Sala -->
-                    <div class="row">
-                        <div class="col-lg-12 m-auto mt-4">
-                            <h2 class="h3 fz-5 mb-4" id="tituloSala">Título da sala</h2>
-                            <p class="text-center text-description mb-4" id="descricaoSala">Lorem ipsum dolor sit, amet
-                                consectetur adipisicing elit. Quae
-                                blanditiis necessitatibus, veritatis iste
-                                mollitia, recusandae quos excepturi ipsum dolor delectus aperiam magnam et aut ab
-                                voluptatum, nisi ea vitae
-                                tempora. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae blanditiis
-                                necessitatibus, veritatis
-                                iste mollitia, recusandae quos excepturi ipsum dolor delectus aperiam magnam et aut ab
-                                voluptatum, nisi ea
-                                vitae tempora.</p>
-                        </div>
-
-                        <div class="col-lg-4 m-auto mt-4">
-                            <div class="card bg-light p-3">
-                                <h5 class="card-title text-center mb-3">Informações da Sala</h5>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-people-fill text-primary me-2"></i>
-                                    <span class="fw-bold">Capacidade:</span>
-                                    <span class="ms-2" id="capacidadeSala">-</span> pessoas
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-currency-dollar text-success me-2"></i>
-                                    <span class="fw-bold">Valor:</span>
-                                    <span class="ms-2" id="precoSala">R$ 00,00</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-clock text-info me-2"></i>
-                                    <span class="fw-bold">Disponibilidade:</span>
-                                    <span class="ms-2 text-success">Disponível</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Calendário de Disponibilidade -->
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <h5 class="mb-3 fw-bold">Calendário de Disponibilidade</h5>
-                            <div class="card p-3 shadow-sm border-0">
-                                <div id="calendarioDisponibilidade" class="calendario-grid">
-                                    <!-- Calendário será carregado aqui -->
-                                    <div class="text-center py-2">
-                                        <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                            <span class="visually-hidden">Carregando calendário...</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-3 d-flex gap-3 justify-content-center flex-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <span class="badge bg-success me-2" style="width: 15px; height: 15px;"></span>
-                                        <small>Disponível</small>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="badge bg-danger me-2" style="width: 15px; height: 15px;"></span>
-                                        <small>Indisponível</small>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="badge bg-primary me-2" style="width: 15px; height: 15px;"></span>
-                                        <small>Hoje</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <span>•</span>
+                    <span class="text-muted"><i class="bi bi-geo-alt me-1"></i>Florianópolis, SC</span>
                 </div>
             </div>
         </div>
 
-    </section>
+        <div class="row g-4">
+            <!-- Left Side: Room Image & Details -->
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="container-img mb-4 shadow rounded-4 overflow-hidden">
+                    <img class="img-fluid w-100" id="fotoSala" src="../assets/img/compartilhada.jpg" alt="imagem da sala" style="position: relative; height: 500px; object-fit: cover; opacity: 1;" />
+                </div>
 
-    <footer class="mt-5 ">
-        <div class="container-fluid footer d-flex justify-content-center align-items-center">
-            <p class="d-block text-center mb-0">
-                <span class="text-footer fs-6">Todos os direitos reservados</span>
-                <a href="#" class="fs-5 text-footer-um">&copy; LOCALCO</a>
+                <div class="room-details mb-5">
+                    <h3 class="h4 text-start fw-bold mb-3">Sobre esta sala</h3>
+                    <p class="text-description" id="descricaoSala">
+                        Descrição da sala será carregada aqui...
+                    </p>
+                    
+                    <hr class="my-4 opacity-10">
+
+                    <h3 class="h4 text-start fw-bold mb-3">O que este lugar oferece</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-wifi fs-4 text-primary me-3"></i>
+                                <span>Wi-Fi de alta velocidade</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-wind fs-4 text-primary me-3"></i>
+                                <span>Ar-condicionado</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-people fs-4 text-primary me-3"></i>
+                                <span>Capacidade: <strong id="capacidadeSala">-</strong> pessoas</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-cup-hot fs-4 text-primary me-3"></i>
+                                <span>Café e Água inclusos</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-shield-check fs-4 text-primary me-3"></i>
+                                <span>Segurança 24h</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-printer fs-4 text-primary me-3"></i>
+                                <span>Serviço de impressão</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4 opacity-10">
+
+                    <h3 class="h4 text-start fw-bold mb-3">Disponibilidade</h3>
+                    <div class="card p-3 shadow-sm border-0 bg-white">
+                        <div id="calendarioDisponibilidade" class="calendario-grid">
+                            <!-- Calendário será carregado aqui -->
+                            <div class="text-center py-4">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Carregando calendário...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-flex gap-3 justify-content-center flex-wrap">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-success me-2" style="width: 12px; height: 12px; border-radius: 50%;"></span>
+                                <small>Disponível</small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-danger me-2" style="width: 12px; height: 12px; border-radius: 50%;"></span>
+                                <small>Indisponível</small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2" style="width: 12px; height: 12px; border-radius: 50%;"></span>
+                                <small>Hoje</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Booking Card -->
+            <div class="col-lg-5" data-aos="fade-left">
+                <div class="sticky-top" style="top: 2rem; z-index: 10;">
+                    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                        <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div>
+                                    <span class="fs-3 fw-bold text-dark" id="precoSala">R$ 00,00</span>
+                                    <span class="text-muted">/ dia</span>
+                                </div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-clock me-1"></i> Aberto 08:00 - 18:00
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body p-4">
+                            <form class="needs-validation" novalidate id="formAgendamento">
+                                <!-- Datas -->
+                                <div class="border rounded-3 mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-6 border-end p-2 px-3">
+                                            <label for="dataEntradaImagem" class="small fw-bold text-uppercase color-agendamento">Entrada</label>
+                                            <input type="date" class="form-control border-0 p-0 shadow-none bg-transparent" id="dataEntradaImagem" required />
+                                        </div>
+                                        <div class="col-6 p-2 px-3">
+                                            <label for="dataSaidaImagem" class="small fw-bold text-uppercase color-agendamento">Saída</label>
+                                            <input type="date" class="form-control border-0 p-0 shadow-none bg-transparent" id="dataSaidaImagem" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Horários -->
+                                <div class="border rounded-3 mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-6 border-end p-2 px-3">
+                                            <label for="horaEntrada" class="small fw-bold text-uppercase color-agendamento">H. Entrada</label>
+                                            <input type="time" class="form-control border-0 p-0 shadow-none bg-transparent" id="horaEntrada" required>
+                                        </div>
+                                        <div class="col-6 p-2 px-3">
+                                            <label for="horaSaida" class="small fw-bold text-uppercase color-agendamento">H. Saída</label>
+                                            <input type="time" class="form-control border-0 p-0 shadow-none bg-transparent" id="horaSaida" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pagamento -->
+                                <div class="mb-3">
+                                    <label for="formaPg" class="small fw-bold text-uppercase color-agendamento mb-1 d-block">Forma de Pagamento</label>
+                                    <select class="form-select" id="formaPg" required>
+                                        <option value="">Selecione...</option>
+                                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                        <option value="Cartão de Débito">Cartão de Débito</option>
+                                        <option value="PIX">PIX</option>
+                                        <option value="Boleto">Boleto</option>
+                                    </select>
+                                </div>
+
+                                <!-- Observações -->
+                                <div class="mb-3">
+                                    <label for="observacoes" class="small fw-bold text-uppercase color-agendamento mb-1 d-block">Observações</label>
+                                    <textarea class="form-control" id="observacoes" rows="2" placeholder="Ex: Preciso de adaptador de vídeo..."></textarea>
+                                </div>
+
+                                <button type="submit" class="btn agendamento btn-lg w-100 py-3 mt-2 shadow-sm">
+                                    Reservar Agora
+                                </button>
+
+                                <p class="text-center text-muted small mt-3 mb-0">Você não será cobrado agora</p>
+                            </form>
+
+                            <hr class="my-4">
+
+                            <!-- Resumo de Valores -->
+                            <div class="resumo-valores">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted"><span id="resumoPrecoDia">R$ 0,00</span> x <span id="resumoDias">0 dias</span></span>
+                                    <span id="subtotalValue">R$ 0,00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted underline decoration-dotted">Período</span>
+                                    <span id="resumoPeriodo" class="text-end">-</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-muted">Taxa de serviço LocalCo</span>
+                                    <span>R$ 0,00</span>
+                                </div>
+                                <div class="d-flex justify-content-between pt-3 border-top">
+                                    <span class="fw-bold fs-5">Total</span>
+                                    <span class="fw-bold fs-5 text-primary" id="resumoTotal">R$ 0,00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3 bg-light border-0 p-3 rounded-4">
+                        <div class="d-flex">
+                            <i class="bi bi-gem text-primary fs-4 me-3"></i>
+                            <div>
+                                <span class="fw-bold d-block">Espaço Premium</span>
+                                <small class="text-muted">Este é um dos poucos espaços na região com café artesanal ilimitado.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-5 border-top">
+        <div class="container py-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <p class="mb-0 text-muted">
+                &copy; 2026 LOCALCO. Todos os direitos reservados.
             </p>
-            <div class="item mx-lg-2 ps-3">
-                <a href="#"><i class="fs-4 item insta bi bi-instagram"></i></a>
-                <a href="#"><i class="fs-4 item face bi bi-facebook mx-lg-2"></i></a>
-                <a href="#"><i class="fs-4 item x bi bi-twitter-x"></i></a>
+            <div class="d-flex gap-4 mt-3 mt-md-0">
+                <a href="#" class="text-muted fs-5"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-muted fs-5"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-muted fs-5"><i class="bi bi-twitter-x"></i></a>
             </div>
         </div>
     </footer>
@@ -458,7 +538,10 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
+        AOS.init({
+            duration: 800,
+            once: true
+        });
     </script>
 
     <script type="module" src="../js/main.js"></script>
@@ -468,3 +551,4 @@
 </body>
 
 </html>
+

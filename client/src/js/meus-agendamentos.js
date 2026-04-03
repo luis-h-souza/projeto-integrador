@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 let agendamentos = {};
+window.agendamentos = agendamentos;
 
 // eventos de inicialização
 agendamentos.event = {
