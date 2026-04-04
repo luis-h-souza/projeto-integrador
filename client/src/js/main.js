@@ -142,7 +142,15 @@ main.method = {
       } catch (_) {}
     }
     localStorage.clear();
-    window.location.href = "../index.html";
+    
+    // Redireciona para o index.html da raiz
+    // Se estiver em uma subpasta (ex: src/pages/), volta um nível e vai para index.html
+    // Se estiver na raiz, apenas recarrega ou vai para index.html
+    if (window.location.pathname.includes('/src/pages/')) {
+        window.location.href = "../../index.html";
+    } else {
+        window.location.href = "index.html";
+    }
   },
 
   // método para criarum toast de resposta
