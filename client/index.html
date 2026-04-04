@@ -22,6 +22,7 @@
 
   <link rel="stylesheet" href="./src/css/style.css" />
   <link rel="stylesheet" href="./src/css/login.css" />
+  <link rel="stylesheet" href="./src/css/dropdown.css" />
 </head>
 
 <body>
@@ -70,6 +71,46 @@
 
             <a id="login" class="contato login d-sm-none d-md-none d-lg-block text-center d-flex align-content-center "
               href="./src/pages/login.html" target="_blank">Login</a>
+
+            <span class="navigation__group d-none">
+              <button type="button" class="profile__btn me-2">
+                  <img src="./src/assets/img/default-avatar.png" alt="Usuário">
+              </button>
+              
+              <div class="dropdown__wrapper">
+                  <nav>
+                      <div class="profile__wrapper">
+                          <img class="profile__avatar__drop " src="./src/assets/img/default-avatar.png"
+                              alt="Usuário">
+                          <div id="profileInfo" class="profile__description">
+                              <!-- NOME E EMAIL -->
+                          </div>
+                      </div>
+                      <hr class="divider">
+                      <ul>
+                          <li>
+                              <a href="./src/pages/meus-agendamentos.html" class="d-flex align-items-center text-decoration-none text-reset w-100 h-100">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M15 19l2 2l4 -4" /></svg>    
+                                  Agendamentos
+                              </a>
+                          </li>
+                          <li>
+                              <a href="./src/pages/configuracoes.html" class="d-flex align-items-center text-decoration-none text-reset w-100 h-100">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>                            
+                                  Configurações
+                              </a>
+                          </li>
+                      </ul>
+                      <hr class="divider">
+                      <ul>
+                          <li id="logout">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+                              Logout
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+            </span>
 
           </div>
         </nav>
@@ -468,7 +509,7 @@
 
   <script type="module" src="./src/js/main.js"></script>
   <script type="module" src="./src/js/validacao.js"></script>
-
+  <script type="module" src="./src/js/dropdown.js"></script>
 </body>
 
 </html>

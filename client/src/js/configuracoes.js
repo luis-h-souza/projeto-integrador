@@ -1,4 +1,4 @@
-import main from "./main";
+import main from "./main.js";
 import { API_BASE_URL } from "./apiConfig.js";
 
 const configuracoes = {
@@ -59,27 +59,39 @@ const configuracoes = {
         salvarPerfil: async () => {
             const token = main.method.obterValorStorage('token');
             const form = document.getElementById('formPerfil');
+            
+            // Converte FormData para um objeto simples para enviar como JSON
             const formData = new FormData(form);
+            const dadosObjeto = {};
+            formData.forEach((value, key) => {
+                dadosObjeto[key] = value;
+            });
 
             try {
                 const response = await fetch(`${API_BASE_URL}/perfil/update`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    body: formData
+                    body: JSON.stringify(dadosObjeto)
                 });
+
+                const data = await response.json();
 
                 if (response.ok) {
                     main.method.mensagem("Perfil atualizado com sucesso!", "green");
+                    // Opcional: Atualiza o nome no LocalStorage se mudou
+                    if (dadosObjeto.nome) {
+                        main.method.gravarValorStorage('nome', dadosObjeto.nome);
+                    }
                 } else {
-                    const data = await response.json();
-                    main.method.mensagem(data.message || "Erro ao salvar perfil.");
+                    main.method.mensagem(data.message || "Erro ao salvar perfil.", "red");
                 }
             } catch (error) {
                 console.error("Erro ao salvar perfil:", error);
-                main.method.mensagem("Erro de rede ao salvar perfil.");
+                main.method.mensagem("Erro de rede ao salvar perfil.", "red");
             }
         }
     }

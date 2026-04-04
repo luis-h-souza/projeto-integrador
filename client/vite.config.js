@@ -20,6 +20,7 @@ const htmlEntries = [
 	"src/pages/post1-blog.html",
 	"src/pages/post2-blog.html",
 	"src/pages/post3-blog.html",
+	"src/pages/configuracoes.html",
 ];
 
 const rollupInput = Object.fromEntries(

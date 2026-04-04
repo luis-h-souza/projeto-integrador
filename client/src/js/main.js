@@ -11,6 +11,15 @@ let main = {};
 main.event = {
   init: () => {
     AOS.init();
+    main.method.exibirMenuUsuario();
+    
+    // Configura o evento de logout globalmente se o botão existir
+    const logoutBtn = document.getElementById('logout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        main.method.logout();
+      });
+    }
   }
 }
 
@@ -157,6 +166,43 @@ main.method = {
             element.remove();
         }
     }, tempo);
+  },
+
+  // Exibe o menu do usuário logado e oculta o botão de login
+  exibirMenuUsuario: () => {
+    const profileInfo = document.getElementById('profileInfo');
+    const loginBtn = document.getElementById('login');
+    const userGroup = document.querySelector('.navigation__group');
+
+    const token = main.method.obterValorStorage('token');
+    const nome = main.method.obterValorStorage('nome');
+    const email = main.method.obterValorStorage('email');
+
+    // Função para limpar dados do localStorage
+    const limparDados = (dados) => {
+        if (!dados) return null;
+        return dados.toString()
+            .replace(/^["']|["']$/g, '')
+            .replace(/["']/g, '')
+            .trim();
+    };
+
+    if (token && (nome || email)) {
+        // Se estiver logado, oculta o botão de login e mostra o grupo do usuário
+        if (loginBtn) loginBtn.classList.add('d-none');
+        if (userGroup) userGroup.classList.remove('d-none');
+
+        if (profileInfo) {
+            profileInfo.innerHTML = `
+                <h5>${limparDados(nome) || 'Usuário'}</h5>
+                <p>${limparDados(email) || ''}</p>
+            `;
+        }
+    } else {
+        // Se não estiver logado, faz o contrário
+        if (loginBtn) loginBtn.classList.remove('d-none');
+        if (userGroup) userGroup.classList.add('d-none');
+    }
   },
 
 }
