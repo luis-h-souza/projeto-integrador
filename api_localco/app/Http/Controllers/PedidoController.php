@@ -132,6 +132,7 @@ class PedidoController extends Controller
         $pedidoCompleto->preco_total = $precoTotal;
         $pedidoCompleto->dias_reservados = $diasReservados;
 
+        /* 
         // Envia email de confirmação
         try {
             $usuario = Usuario::find($cliente->id_usuario_fk);
@@ -145,6 +146,7 @@ class PedidoController extends Controller
             // Usamos \Throwable para capturar erros fatais de dependências como EmailValidator
             Log::error('Erro ao enviar email de confirmação: ' . $e->getMessage());
         }
+        */
 
         return response()->json([
             "message" => "Agendamento realizado com sucesso!",

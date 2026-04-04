@@ -22,4 +22,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/pedido', [PedidoController::class, 'store']);
     Route::delete('/pedido/{id_pedido}', [PedidoController::class, 'destroy']);
     Route::get('/meus-agendamentos', [PedidoController::class, 'meusAgendamentos']);
+
+    Route::get('/perfil', [UsuarioController::class, 'perfil']);
+    Route::post('/perfil/update', [UsuarioController::class, 'updatePerfil']);
 });

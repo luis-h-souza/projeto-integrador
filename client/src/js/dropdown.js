@@ -2,19 +2,21 @@
 const profile = document.querySelector('.profile__btn');
 const dropdown = document.querySelector('.dropdown__wrapper');
 
-profile.addEventListener('click', () => {
-    dropdown.classList.remove('none');
-    dropdown.classList.toggle('hide');
-})
+if (profile && dropdown) {
+    profile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+    });
 
+    document.addEventListener("click", (event) => {
+        if (!dropdown.contains(event.target) && !profile.contains(event.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
 
-document.addEventListener("click", (event) => {
-    const isClickInsideDropdown = dropdown.contains(event.target);
-    const isProfileClicked = profile.contains(event.target);
-
-    if (!isClickInsideDropdown && !isProfileClicked) {
-        dropdown.classList.add('hide');
-        dropdown.classList.add('dropdown__wrapper--fade-in');
-    }
-});
+    // Prevent dropdown from closing when clicking inside it
+    dropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+}
 

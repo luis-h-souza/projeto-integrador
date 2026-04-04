@@ -116,7 +116,7 @@ class Inline
                     default => 'Y-m-d\TH:i:s.uP',
                 });
             case $value instanceof \UnitEnum:
-                return \sprintf('!php/enum %s::%s', $value::class, $value->name);
+                return \sprintf('!php/const %s::%s', $value::class, $value->name);
             case \is_object($value):
                 if ($value instanceof TaggedValue) {
                     return '!'.$value->getTag().' '.self::dump($value->getValue(), $flags);
@@ -386,11 +386,33 @@ class Inline
                     // the value can be an array if a reference has been resolved to an array var
                     if (\is_string($value) && !$isQuoted && str_contains($value, ': ')) {
                         // embedded mapping?
-                        try {
-                            $pos = 0;
-                            $value = self::parseMapping('{'.$value.'}', $flags, $pos, $references);
-                        } catch (\InvalidArgumentException) {
-                            // no, it's not
+                        $j = $i;
+                        $mappingValue = $value;
+                        $mappingException = null;
+                        do {
+                            try {
+                                $pos = 0;
+                                $value = self::parseMapping('{'.$mappingValue.'}', $flags, $pos, $references);
+                                $i = $j;
+                                $mappingException = null;
+                                break;
+                            } catch (ParseException $exception) {
+                                $mappingException = $exception;
+                                if ($j >= $len) {
+                                    break;
+                                }
+
+                                $mappingValue .= $sequence[$j++];
+                                if ($j >= $len) {
+                                    break;
+                                }
+
+                                $mappingValue .= self::parseScalar($sequence, $flags, [',', ']'], $j, null === $tag, $references);
+                            }
+                        } while ($j < $len);
+
+                        if ($mappingException) {
+                            throw $mappingException;
                         }
                     }
 
@@ -453,7 +475,7 @@ class Inline
             }
 
             if ('!php/const' === $key || '!php/enum' === $key) {
-                $key .= ' '.self::parseScalar($mapping, $flags, [':'], $i, false);
+                $key .= ' '.self::parseScalar($mapping, $flags, ['(?<!:):(?!:)'], $i, false);
                 $key = self::evaluateScalar($key, $flags);
             }
 
@@ -577,7 +599,7 @@ class Inline
             }
 
             // an unquoted *
-            if ('' === $value) {
+            if (false === $value || '' === $value) {
                 throw new ParseException('A reference must contain at least one character.', self::$parsedLineNumber + 1, $value, self::$parsedFilename);
             }
 
@@ -602,7 +624,7 @@ class Inline
             case '!' === $scalar[0]:
                 switch (true) {
                     case str_starts_with($scalar, '!!str '):
-                        $s = substr($scalar, 6);
+                        $s = (string) substr($scalar, 6);
 
                         if (\in_array($s[0] ?? '', ['"', "'"], true)) {
                             $isQuotedString = true;
@@ -651,31 +673,24 @@ class Inline
                             }
 
                             $i = 0;
-                            $enumName = self::parseScalar(substr($scalar, 10), 0, null, $i, false);
-                            $useName = str_contains($enumName, '::');
-                            $enum = $useName ? strstr($enumName, '::', true) : $enumName;
-
-                            if (!enum_exists($enum)) {
+                            $enum = self::parseScalar(substr($scalar, 10), 0, null, $i, false);
+                            if ($useValue = str_ends_with($enum, '->value')) {
+                                $enum = substr($enum, 0, -7);
+                            }
+                            if (!\defined($enum)) {
                                 throw new ParseException(\sprintf('The enum "%s" is not defined.', $enum), self::$parsedLineNumber + 1, $scalar, self::$parsedFilename);
                             }
-                            if (!$useName) {
-                                return $enum::cases();
-                            }
-                            if ($useValue = str_ends_with($enumName, '->value')) {
-                                $enumName = substr($enumName, 0, -7);
-                            }
 
-                            if (!\defined($enumName)) {
-                                throw new ParseException(\sprintf('The string "%s" is not the name of a valid enum.', $enumName), self::$parsedLineNumber + 1, $scalar, self::$parsedFilename);
+                            $value = \constant($enum);
+
+                            if (!$value instanceof \UnitEnum) {
+                                throw new ParseException(\sprintf('The string "%s" is not the name of a valid enum.', $enum), self::$parsedLineNumber + 1, $scalar, self::$parsedFilename);
                             }
-
-                            $value = \constant($enumName);
-
                             if (!$useValue) {
                                 return $value;
                             }
                             if (!$value instanceof \BackedEnum) {
-                                throw new ParseException(\sprintf('The enum "%s" defines no value next to its name.', $enumName), self::$parsedLineNumber + 1, $scalar, self::$parsedFilename);
+                                throw new ParseException(\sprintf('The enum "%s" defines no value next to its name.', $enum), self::$parsedLineNumber + 1, $scalar, self::$parsedFilename);
                             }
 
                             return $value->value;
@@ -708,6 +723,10 @@ class Inline
                 switch (true) {
                     case ctype_digit($scalar):
                     case '-' === $scalar[0] && ctype_digit(substr($scalar, 1)):
+                        if ($scalar < \PHP_INT_MIN || \PHP_INT_MAX < $scalar) {
+                            return $scalar;
+                        }
+
                         $cast = (int) $scalar;
 
                         return ($scalar === (string) $cast) ? $cast : $scalar;
@@ -744,7 +763,7 @@ class Inline
                             if (false !== $scalar = $time->getTimestamp()) {
                                 return $scalar;
                             }
-                        } catch (\ValueError) {
+                        } catch (\DateRangeError|\ValueError) {
                             // no-op
                         }
 

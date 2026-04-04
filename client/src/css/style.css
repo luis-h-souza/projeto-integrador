@@ -45,14 +45,19 @@
 html {
     overflow-x: hidden;
     max-width: 100%;
+    min-height: 100vh;
 }
 
-body,
-.navbar {
+body {
     background-color: var(--color-bg1) !important;
     font-family: "Poppins", sans-serif;
     overflow-x: hidden;
     max-width: 100%;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: var(--color-bg1) !important;
 }
 
 .bg {
@@ -131,9 +136,10 @@ body,
 }
 
 .toast {
+    display: block !important;
     opacity: 1 !important;
     width: max-content;
-    color: var(--color-bg1);
+    color: var(--color-bg1) !important;
     padding: 10px 25px;
     font-size: 16px;
     border-radius: 15px;
@@ -485,7 +491,7 @@ body,
 }
 
 /* carousel */
-.carousel {
+.custom-carousel {
     width: 100%;
     max-width: 100vw;
     height: 100vh;
@@ -494,7 +500,7 @@ body,
     opacity: 1;
 }
 
-.carousel .list .item {
+.custom-carousel .list .item {
     width: 180px;
     height: 250px;
     position: absolute;
@@ -509,8 +515,8 @@ body,
     transition: 1s;
 }
 
-.carousel .list .item:nth-child(1),
-.carousel .list .item:nth-child(2) {
+.custom-carousel .list .item:nth-child(1),
+.custom-carousel .list .item:nth-child(2) {
     top: 0;
     left: 0;
     transform: translate(0, 0);
@@ -519,19 +525,19 @@ body,
     height: 100%;
 }
 
-.carousel .list .item:nth-child(3) {
+.custom-carousel .list .item:nth-child(3) {
     left: 67%;
 }
 
-.carousel .list .item:nth-child(4) {
+.custom-carousel .list .item:nth-child(4) {
     left: calc(67% + 200px);
 }
 
-.carousel .list .item:nth-child(5) {
+.custom-carousel .list .item:nth-child(5) {
     left: calc(67% + 400px);
 }
 
-.carousel .list .item:nth-child(n + 5) {
+.custom-carousel .list .item:nth-child(n + 5) {
     left: calc(67% + 800px);
     opacity: 0;
 }
@@ -678,7 +684,7 @@ body,
 }
 
 /* time running */
-.carousel .timeRunning {
+.custom-carousel .timeRunning {
     position: absolute;
     z-index: 1000;
     width: 0%;

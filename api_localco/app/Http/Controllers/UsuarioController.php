@@ -132,4 +132,63 @@ class UsuarioController extends Controller
 
         return response()->json(['message' => 'Logout realizado com sucesso']);
     }
+
+    public function perfil(Request $request)
+    {
+        $token = $request->bearerToken();
+        $usuario = Usuario::where('api_token', $token)->first();
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuário não autenticado'], 401);
+        }
+
+        $cliente = Cliente::where('id_usuario_fk', $usuario->id)
+            ->with(['psfisica', 'juridico'])
+            ->first();
+
+        return response()->json([
+            'usuario' => $usuario,
+            'cliente' => $cliente
+        ]);
+    }
+
+    public function updatePerfil(Request $request)
+    {
+        $token = $request->bearerToken();
+        $usuario = Usuario::where('api_token', $token)->first();
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuário não autenticado'], 401);
+        }
+
+        $cliente = Cliente::where('id_usuario_fk', $usuario->id)->first();
+
+        if (!$cliente) {
+            return response()->json(['message' => 'Cliente não encontrado'], 404);
+        }
+
+        $cliente->update($request->only([
+            'nome',
+            'telefone',
+            'celular',
+            'rua',
+            'bairro',
+            'numero',
+            'complemento',
+            'cidade',
+            'estado',
+            'pais'
+        ]));
+
+        // Também atualiza o nome no usuário
+        if ($request->filled('nome')) {
+            $usuario->nome = $request->nome;
+            $usuario->save();
+        }
+
+        return response()->json([
+            'message' => 'Perfil atualizado com sucesso',
+            'cliente' => $cliente
+        ]);
+    }
 }

@@ -149,10 +149,13 @@ main.method = {
 
     let msg = `<div id="msg-${id}" class="toast ${cor}">${texto}</div>`;
 
-    container.innerHTML += msg;
+    container.insertAdjacentHTML('beforeend', msg);
 
     setTimeout(() => {
-      document.querySelector(`#msg-${id}`).remove();
+        const element = document.querySelector(`#msg-${id}`);
+        if (element) {
+            element.remove();
+        }
     }, tempo);
   },
 
