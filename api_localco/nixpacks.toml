@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["php81", "php81Packages.composer", "nodejs-18_x"]
+nixPkgs = ["php82", "php82Packages.composer", "nodejs-18_x"]
 
 [start]
 cmd = "composer install --no-dev --optimize-autoloader && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
